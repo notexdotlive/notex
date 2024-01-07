@@ -38,7 +38,7 @@ export default function Header() {
             >
               <span className="font-semibold">Sign Up</span>
               <span className="mx-1.5">—</span>
-              <span className="italic font-normal">it's free</span>
+              <span className="italic font-normal">it&apos;s free</span>
             </span>
           </a>
         </div>
