@@ -22,7 +22,7 @@ const Homepage = () => {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 w-full p-0 sm:p-8 md:p-0 -mb-48 z-10">
+        <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 w-full p-0 sm:p-8 md:p-0 -mb-64 z-10">
           <div className="flex flex-col items-center md:items-start justify-start gap-4 w-full max-w-xl h-full text-balance sm:text-pretty text-center md:text-left">
             <span
               className="group flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-zinc-100 border border-zinc-200"
