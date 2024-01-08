@@ -1,8 +1,8 @@
 export default function Header() {
   return (
-    <header className="flex flex-1 items-center justify-between min-w-screen h-20 mx-auto bg-zinc-100 border-b border-zinc-200 z-20">
+    <header className="flex flex-1 items-center justify-between min-w-screen h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-20">
       <div
-        className="flex flex-1 items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto p-4"
+        className="flex flex-1 items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto px-4 py-2"
         id="header-content"
       >
         <div className="flex items-center justify-start gap-4">
