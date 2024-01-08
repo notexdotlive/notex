@@ -5,12 +5,13 @@ const Homepage = () => {
   return (
     <>
       <section
-        className="relative flex flex-1 flex-col items-start justify-between gap-16 md:gap-4 w-full max-w-screen-hd md:h-fit mx-auto p-4 py-16 z-0"
+        className="relative flex flex-1 md:grid grid-cols-[62fr,38fr] flex-col md:flex-row items-start justify-between gap-16 md:gap-0 w-full max-w-screen-hd h-auto mx-auto p-4 py-16 z-0"
         id="hero-section"
       >
         <div className="absolute top-px max-md:-left-64 -mt-[2px] flex justify-center pointer-events-none select-none z-0 overflow-hidden md:-scale-x-100">
           <div className="w-[120rem] h-[120rem] flex-none flex justify-end md:justify-start -scale-x-100">
             <img
+              alt="NoteX Lightning"
               src="/assets/lightning.avif"
               className="w-[100rem] flex-none max-w-none blur-3xl -scale-x-100"
               style={{
@@ -25,9 +26,12 @@ const Homepage = () => {
         <div className="flex flex-col md:flex-row items-center md:items-start justify-center md:justify-between gap-4 w-full p-0 sm:p-8 md:p-0 -mb-64 z-10">
           <div className="flex flex-col items-center md:items-start justify-start gap-4 w-full max-w-xl h-full text-balance sm:text-pretty text-center md:text-left">
             <span
-              className="group flex items-center justify-center gap-2 px-3 py-2 rounded-md bg-zinc-100 border border-zinc-200"
               id="hero-badge"
               data-pulse={false}
+              className="group flex items-center justify-center gap-2 px-3 py-1 rounded-full border border-rose-300 bg-gradient-to-r from-rose-50 via-rose-300/50 to-rose-100 animate-background-linear"
+              style={{
+                backgroundSize: '600%',
+              }}
             >
               <div
                 className="group-data-[pulse=false]:hidden group-data-[pulse=true]:block relative w-1.5 h-1.5 rounded-full bg-rose-500"
@@ -38,7 +42,7 @@ const Homepage = () => {
 
               <span className="flex items-center justify-start gap-2 text-zinc-950 text-sm">
                 <Icon
-                  name="Rocket"
+                  name="Stars"
                   className="w-4 h-4 text-rose-500"
                   aria-hidden
                 />
@@ -54,8 +58,20 @@ const Homepage = () => {
               creativity, instantly at your fingertips.
             </p>
 
+            <div
+              className="flex flex-col items-end justify-end gap-2 w-fit h-full"
+              id="hero-buttons"
+            >
+              <button
+                className="flex flex-col items-center justify-center gap-4 h-full px-6 py-3 my-2 text-pretty rounded-md text-zinc-50 bg-zinc-900 hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-zinc-300 focus-visible:ring-opacity-50 focus-visible:ring-offset-zinc-900"
+                id="start-creating-button"
+              >
+                <span className="whitespace-nowrap">Start Creating</span>
+              </button>
+            </div>
+
             <ul
-              className="flex items-center justify-center md:justify-start gap-2 px-2 w-full md:w-fit md:max-w-md md:bg-zinc-100 md:border md:border-zinc-200 rounded-md md:mt-2"
+              className="flex items-center justify-center md:justify-start gap-2 px-2 md:px-0 w-full md:w-fit md:max-w-md"
               id="hero-features"
             >
               <li
@@ -67,7 +83,7 @@ const Homepage = () => {
                   className="w-4 h-4 text-rose-500"
                   aria-hidden
                 />
-                <p>Without credit card</p>
+                <p>No credit card</p>
               </li>
 
               <li
@@ -79,41 +95,21 @@ const Homepage = () => {
                   className="w-4 h-4 text-rose-500"
                   aria-hidden
                 />
-                <p>Without registration</p>
+                <p>No registration</p>
               </li>
             </ul>
-          </div>
-
-          <div
-            className="flex flex-col items-end justify-end gap-2 w-fit h-full"
-            id="hero-buttons"
-          >
-            <button
-              className="flex flex-col items-center justify-center gap-4 h-full px-6 md:px-8 py-3 md:py-4 md:text-xl text-pretty text-zinc-50 bg-zinc-900 rounded-md"
-              id="start-creating-button"
-            >
-              <span className="whitespace-nowrap">Start Creating</span>
-            </button>
           </div>
         </div>
 
         <div
-          className="relative flex items-center justify-center md:block w-full min-h-36 md:min-h-[500px] h-fit max-md:mt-64 md:mb-96 pointer-events-none select-none"
+          className="relative flex items-center justify-center md:block w-full min-h-36 md:min-h-[500px] h-fit max-md:mt-48 -mb-72 md:mb-0 pointer-events-none select-none"
           id="hero-illustrations"
         >
-          <picture className="absolute right-0 max-md:left-0 top-0 md:w-1/2 md:h-auto md:mt-32">
+          <picture className="md:w-1/2 md:h-auto md:mt-32">
             <img
               src="/assets/book.svg"
               alt="NoteX Book"
-              className="w-full max-md:max-w-sm md:w-full mx-auto min-h-32 h:full object-contain pointer-events-none select-none mask-image-linear max-md:rotate-[8.8deg]"
-            />
-          </picture>
-
-          <picture className="hidden md:block absolute right-0 -mr-10 w-full h-auto -z-[1]">
-            <img
-              src="/assets/dashed-line.svg"
-              alt="NoteX Dashed Line"
-              className="w-full px-32 h-auto object-contain pointer-events-none select-none animate-pulse"
+              className="w-full max-w-md md:w-full mx-auto min-h-32 h:full object-contain pointer-events-none select-none mask-image-linear rotate-[8.8deg]"
             />
           </picture>
         </div>
