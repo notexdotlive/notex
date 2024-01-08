@@ -1,4 +1,6 @@
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Analytics } from '@vercel/analytics/react';
+
 import { archivo, inter } from './fonts';
 
 import '../styles/globals.css';
@@ -20,6 +22,7 @@ export default function RootLayout({ children }: any) {
           {children}
         </main>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
