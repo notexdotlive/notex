@@ -5,7 +5,7 @@ const Homepage = () => {
   return (
     <>
       <section
-        className="relative flex flex-1 flex-col items-start justify-between gap-16 md:gap-4 w-full max-w-screen-hd h-fit mx-auto p-4 py-16 z-0"
+        className="relative flex flex-1 flex-col items-start justify-between gap-16 md:gap-4 w-full max-w-screen-hd md:h-fit mx-auto p-4 py-16 z-0"
         id="hero-section"
       >
         <div className="absolute top-px max-md:-left-64 -mt-[2px] flex justify-center pointer-events-none select-none z-0 overflow-hidden md:-scale-x-100">
@@ -55,7 +55,7 @@ const Homepage = () => {
             </p>
 
             <ul
-              className="flex items-center justify-center md:justify-start gap-2 px-2 w-full md:w-fit md:max-w-md md:bg-zinc-100 md:border md:border-zinc-200 rounded-md"
+              className="flex items-center justify-center md:justify-start gap-2 px-2 w-full md:w-fit md:max-w-md md:bg-zinc-100 md:border md:border-zinc-200 rounded-md md:mt-2"
               id="hero-features"
             >
               <li
@@ -98,14 +98,14 @@ const Homepage = () => {
         </div>
 
         <div
-          className="relative w-full min-h-[500px] h-full max-md:mt-48 md:mb-96 pointer-events-none select-none"
+          className="relative flex items-center justify-center md:block w-full min-h-36 md:min-h-[500px] h-fit max-md:mt-64 md:mb-96 pointer-events-none select-none"
           id="hero-illustrations"
         >
-          <picture className="md:absolute right-0 top-0 w-1/2 h-auto mt-32">
+          <picture className="absolute right-0 max-md:left-0 top-0 md:w-1/2 md:h-auto md:mt-32">
             <img
               src="/assets/book.svg"
               alt="NoteX Book"
-              className="md:w-full mx-auto h:1/2 md:h-auto object-contain pointer-events-none select-none"
+              className="w-full max-md:max-w-sm md:w-full mx-auto min-h-32 h:full object-contain pointer-events-none select-none mask-image-linear max-md:rotate-[8.8deg]"
             />
           </picture>
 
