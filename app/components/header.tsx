@@ -18,7 +18,7 @@ export default function Header() {
         <div className="flex items-center justify-end gap-2">
           <a
             href="/"
-            className="flex flex-1 items-center justify-center gap-4 px-6 py-3 text-sm text-pretty text-zinc-950 bg-zinc-100 border border-zinc-200 rounded-md whitespace-nowrap"
+            className="flex flex-1 items-center justify-center gap-4 px-4 py-2 text-sm text-pretty text-zinc-950 bg-zinc-100 border border-zinc-200 rounded-md whitespace-nowrap"
           >
             <span
               className="flex items-center justify-center"
@@ -30,7 +30,7 @@ export default function Header() {
 
           <a
             href="/"
-            className="flex flex-1 items-center justify-center gap-4 px-6 py-3 text-sm text-pretty text-zinc-50 bg-zinc-900 rounded-md"
+            className="flex flex-1 items-center justify-center gap-4 px-4 py-2 text-sm text-pretty text-zinc-50 bg-zinc-900 rounded-md"
           >
             <span
               className="flex items-center justify-center whitespace-nowrap"
