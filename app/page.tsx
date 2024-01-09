@@ -1,7 +1,11 @@
 import { Icon } from './components/icon';
+
+import StarCounter from './components/starcounter';
 import Section from './components/section';
 
 const Homepage = () => {
+  const star_count = 4.5;
+
   return (
     <>
       <section
@@ -117,29 +121,18 @@ const Homepage = () => {
             id="hero-rating"
           >
             <div
-              className="flex flex-row items-center justify-center gap-1"
+              className="flex flex-row items-center justify-center md:justify-start gap-2 w-full"
               id="hero-stars"
             >
               <section
                 className="flex items-center justify-center gap-0.5 text-rose-500"
                 id="hero-stars"
               >
-                {Array.from({ length: 5 }).map((_, i) => {
-                  return (
-                    <Icon
-                      key={i}
-                      name="Star"
-                      className={`w-4 h-4 text-rose-500 ${
-                        i < 4 ? 'fill-rose-500' : 'fill-transparent'
-                      }`}
-                      aria-hidden
-                    />
-                  );
-                })}
+                <StarCounter count={star_count} limit={5} />
               </section>
 
-              <span className="flex items-center justify-start gap-2 text-sm text-zinc-500 ml-2">
-                4.9 stars
+              <span className="flex items-center justify-start text-sm text-zinc-500">
+                {star_count} stars
                 <span className="sr-only">out of 5 stars</span>
               </span>
             </div>
