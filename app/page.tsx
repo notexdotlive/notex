@@ -5,7 +5,7 @@ const Homepage = () => {
   return (
     <>
       <section
-        className="relative flex flex-1 md:grid grid-cols-[62fr,38fr] flex-col md:flex-row items-start justify-between gap-16 md:gap-0 w-full max-w-screen-hd h-auto mx-auto p-4 py-16 z-0"
+        className="relative flex flex-1 md:grid grid-cols-[62fr,38fr] flex-col md:flex-row items-start justify-between gap-16 md:gap-0 w-full max-w-screen-hd h-auto mx-auto p-4 pt-12 sm:py-16 z-0"
         id="hero-section"
       >
         <div className="absolute top-px max-md:-left-64 -mt-[2px] flex justify-center pointer-events-none select-none z-0 overflow-hidden md:-scale-x-100">
@@ -40,7 +40,7 @@ const Homepage = () => {
                 <div className="absolute top-0 left-0 w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping" />
               </div>
 
-              <span className="flex items-center justify-start gap-2 text-zinc-950 text-sm">
+              <span className="flex items-center justify-start gap-2 text-zinc-950 text-sm text-nowrap">
                 <Icon
                   name="Stars"
                   className="w-4 h-4 text-rose-500"
@@ -50,10 +50,15 @@ const Homepage = () => {
               </span>
             </span>
 
-            <h1 className="w-full text-4xl sm:text-7xl font-bold leading-none text-center md:text-left">
+            <h1
+              className="w-full text-4xl sm:text-7xl font-bold leading-none text-center md:text-left text-balance"
+              style={{
+                fontSize: 'clamp(2.25rem, 5.4vw, 4.5rem)!important',
+              }}
+            >
               Never throw away a thought
             </h1>
-            <p className="w-full sm:text-xl text-zinc-500 text-center md:text-left">
+            <p className="w-full md:text-xl text-zinc-500 text-center md:text-left text-balance">
               Effortlessly capture, organize, and bring your ideas to life. Your
               creativity, instantly at your fingertips.
             </p>
