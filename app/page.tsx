@@ -53,12 +53,7 @@ const Homepage = () => {
                 Introducing NoteX — Notes, but better.
               </span>
             </span>
-            <h1
-              className="w-full text-4xl sm:text-7xl font-bold leading-none text-center md:text-left text-balance"
-              style={{
-                fontSize: 'clamp(2.25rem, 5.4vw, 4.5rem)!important',
-              }}
-            >
+            <h1 className="w-full text-title font-bold leading-none text-center md:text-left text-balance">
               Never throw away a thought
             </h1>
             <p className="hidden sm:block w-full md:text-xl text-zinc-500 text-center md:text-left text-balance">
@@ -179,44 +174,6 @@ const Homepage = () => {
           imageAlt="NoteX Book"
           imagePosition="right"
         />
-
-        <section
-          className="relative flex flex-1 flex-col items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto py-32"
-          id="markdown-brilliance-section"
-        >
-          <div className="flex flex-col items-center justify-center gap-4 w-full max-w-xl h-full mx-auto text-balance">
-            <h2 className="flex flex-col text-5xl font-bold leading-none text-center">
-              <span>Markdown Brilliance</span>
-            </h2>
-            <p className="text-xl text-zinc-500 text-center">
-              File freedom at your fingertips. Save online with an account or
-              locally without. Seamless access, anytime, anywhere.
-            </p>
-
-            <a
-              href=""
-              className="group/button flex items-center justify-center gap-2 text-xl
-              text-rose-500"
-            >
-              <span>Markdown Guide</span>
-            </a>
-          </div>
-
-          <picture
-            className="absolute top-0 bottom-0 flex items-center justify-center w-screen h-full max-w-screen-hd mx-auto"
-            id="markdown-brilliance"
-          >
-            <img
-              src="/assets/gradient-background.svg"
-              alt="NoteX Gradient Background"
-              className="w-screen h-auto object-cover pointer-events-none select-none"
-              style={{
-                WebkitMaskImage:
-                  'linear-gradient(to right, transparent, black, transparent)',
-              }}
-            />
-          </picture>
-        </section>
 
         <Section
           id="files-section"
