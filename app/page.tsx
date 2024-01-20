@@ -1,5 +1,4 @@
 import { Icon } from './components/icon';
-import Section from './components/section';
 
 const Homepage = () => {
   return (
@@ -120,76 +119,10 @@ const Homepage = () => {
         </div>
       </section>
 
-      <main
-        className="relative flex flex-1 flex-col items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto p-4"
+      {/* <main
+        className="relative flex flex-1 flex-col items-center justify-between gap-4 w-full h-full mx-auto p-4"
         id="features-section"
-      >
-        <Section
-          id="files-section"
-          title={
-            <>
-              <span>Your files.</span>
-              <span>Wherever you need it.</span>
-            </>
-          }
-          description="File freedom at your fingertips. Save online with an account or locally without. Seamless access, anytime, anywhere."
-          image="/assets/illustrations/transfer-files.svg"
-          imageAlt="NoteX Book"
-          imagePosition="right"
-        />
-
-        <section
-          className="relative flex flex-1 flex-col items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto py-32"
-          id="markdown-brilliance-section"
-        >
-          <div className="flex flex-col items-center justify-center gap-4 w-full max-w-xl h-full mx-auto text-balance">
-            <h2 className="flex flex-col text-5xl font-bold leading-none text-center">
-              <span>Markdown Brilliance</span>
-            </h2>
-            <p className="text-xl text-zinc-500 text-center">
-              File freedom at your fingertips. Save online with an account or
-              locally without. Seamless access, anytime, anywhere.
-            </p>
-
-            <a
-              href=""
-              className="group/button flex items-center justify-center gap-2 text-xl
-              text-rose-500"
-            >
-              <span>Markdown Guide</span>
-            </a>
-          </div>
-
-          <picture
-            className="absolute top-0 bottom-0 flex items-center justify-center w-screen h-full max-w-screen-hd mx-auto"
-            id="markdown-brilliance"
-          >
-            <img
-              src="/assets/gradient-background.svg"
-              alt="NoteX Gradient Background"
-              className="w-screen h-auto object-cover pointer-events-none select-none"
-              style={{
-                WebkitMaskImage:
-                  'linear-gradient(to right, transparent, black, transparent)',
-              }}
-            />
-          </picture>
-        </section>
-
-        <Section
-          id="files-section"
-          title={
-            <>
-              <span>Your notes.</span>
-              <span>Your own world.</span>
-            </>
-          }
-          description="Express yourself with formatting tools that help you write how you think. Note down your ideas and express them in writing."
-          image="/assets/illustrations/notes.svg"
-          imageAlt="NoteX Notes"
-          imagePosition="left"
-        />
-      </main>
+      ></main> */}
     </>
   );
 };

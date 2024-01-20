@@ -5,6 +5,7 @@ import { archivo, inter } from './fonts';
 
 import '../styles/globals.css';
 import Header from './components/header';
+import Footer from './components/footer';
 
 export default function RootLayout({ children }: any) {
   return (
@@ -17,9 +18,10 @@ export default function RootLayout({ children }: any) {
       </head>
 
       <body>
-        <main className="relative min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
+        <main className="min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
           <Header />
           {children}
+          <Footer />
         </main>
         <SpeedInsights />
         <Analytics />
