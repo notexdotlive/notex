@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import * as LucideIcons from 'lucide-react';
 
 type IconName = keyof typeof LucideIcons;
@@ -7,6 +8,7 @@ interface IconProps {
   size?: number;
   strokeWidth?: number;
   className?: string;
+  style?: CSSProperties;
 }
 
 export const Icon = ({
@@ -14,6 +16,7 @@ export const Icon = ({
   size = 16,
   strokeWidth,
   className,
+  style,
 }: IconProps) => {
   if (!name) return null;
 
@@ -32,10 +35,11 @@ export const Icon = ({
 
   return (
     <IconComponent
-      className={className}
       width={size}
       height={size}
       strokeWidth={strokeWidth}
+      className={className}
+      style={style}
     />
   );
 };
