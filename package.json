@@ -1,0 +1,27 @@
+{
+  "name": "notex",
+  "version": "0.0.1",
+  "description": "NoteX: Never throw away a thought",
+  "workspace": {
+    "packages": [
+      "./apps/*"
+    ]
+  },
+  "author": {
+    "name": "gelzinn",
+    "email": "gelzin.dzn@gmail.com"
+  },
+  "homepage": "https://github.com/gelzinn/notex#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gelzinn/notex.git"
+  },
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "license": "ISC"
+}
