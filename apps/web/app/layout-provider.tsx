@@ -13,9 +13,10 @@ export const LayoutProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      {!preventComponents.some((prevent) =>
-        prevent.routes.includes(pathname),
-      ) ? (
+      {!preventComponents.some((prevent) => {
+        const routes = prevent.routes;
+        return routes.some((route) => pathname.includes(route));
+      }) ? (
         <>
           <Header />
           {children}
