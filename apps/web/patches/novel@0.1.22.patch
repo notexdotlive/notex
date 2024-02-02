@@ -2,7 +2,7 @@ diff --git a/README.md b/README.md
 deleted file mode 100644
 index 0262df5a962a954cc3949fd8358afb47e2c47cd7..0000000000000000000000000000000000000000
 diff --git a/dist/index.d.mts b/dist/index.d.mts
-index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87bd92d732 100644
+index 9335871c389d548ed143f36a6ee775e927d7bf05..01d5388827f431b6ee1c7b0aec6a496be1b51a8d 100644
 --- a/dist/index.d.mts
 +++ b/dist/index.d.mts
 @@ -1,58 +1,63 @@
@@ -86,12 +86,12 @@ index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87
 +   */
 +  defaultValue?: JSONContent | string;
 +  /**
-+   * A list of extensions to use for the editor, in addition to the default Novel extensions.
++   * A list of extensions to use for the editor.
 +   * Defaults to [].
 +   */
 +  extensions?: Extensions;
 +  /**
-+   * Props to pass to the underlying Tiptap editor, in addition to the default Novel editor props.
++   * Props to pass to the underlying Tiptap editor.
 +   * Defaults to {}.
 +   */
 +  editorProps?: EditorProps;
@@ -112,7 +112,7 @@ index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87
 +  debounceDuration?: number;
 +  /**
 +   * The key to use for storing the editor's value in local storage.
-+   * Defaults to "novel__content".
++   * Defaults to "@notex/note".
 +   */
 +  storageKey?: string;
 +  /**
@@ -124,7 +124,7 @@ index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87
  
  export { Editor };
 diff --git a/dist/index.d.ts b/dist/index.d.ts
-index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87bd92d732 100644
+index 9335871c389d548ed143f36a6ee775e927d7bf05..01d5388827f431b6ee1c7b0aec6a496be1b51a8d 100644
 --- a/dist/index.d.ts
 +++ b/dist/index.d.ts
 @@ -1,58 +1,63 @@
@@ -208,12 +208,12 @@ index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87
 +   */
 +  defaultValue?: JSONContent | string;
 +  /**
-+   * A list of extensions to use for the editor, in addition to the default Novel extensions.
++   * A list of extensions to use for the editor.
 +   * Defaults to [].
 +   */
 +  extensions?: Extensions;
 +  /**
-+   * Props to pass to the underlying Tiptap editor, in addition to the default Novel editor props.
++   * Props to pass to the underlying Tiptap editor.
 +   * Defaults to {}.
 +   */
 +  editorProps?: EditorProps;
@@ -234,7 +234,7 @@ index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87
 +  debounceDuration?: number;
 +  /**
 +   * The key to use for storing the editor's value in local storage.
-+   * Defaults to "novel__content".
++   * Defaults to "@notex/note".
 +   */
 +  storageKey?: string;
 +  /**
@@ -246,7 +246,7 @@ index 9335871c389d548ed143f36a6ee775e927d7bf05..1038b3f141968f5ca0fd6453384e1d87
  
  export { Editor };
 diff --git a/dist/index.js b/dist/index.js
-index 43b29ad33942309793dae4c5f5dbd44abf353016..91ed2a24918aff98c8eda2197c92c373bc7fdd46 100644
+index 43b29ad33942309793dae4c5f5dbd44abf353016..402885d9c846780adc561fd3cd621ebd6c68e598 100644
 --- a/dist/index.js
 +++ b/dist/index.js
 @@ -96,10 +96,10 @@ function styleInject(css2, { insertAt } = {}) {
@@ -1233,7 +1233,7 @@ index 43b29ad33942309793dae4c5f5dbd44abf353016..91ed2a24918aff98c8eda2197c92c373
    disableLocalStorage = false
  }) {
    const [content, setContent] = use_local_storage_default(storageKey, defaultValue);
-@@ -16697,61 +16329,21 @@ function Editor2({
+@@ -16697,83 +16329,29 @@ function Editor2({
      extensions: [...defaultExtensions, ...extensions],
      editorProps: __spreadValues(__spreadValues({}, defaultEditorProps), editorProps),
      onUpdate: (e) => {
@@ -1276,13 +1276,12 @@ index 43b29ad33942309793dae4c5f5dbd44abf353016..91ed2a24918aff98c8eda2197c92c373
 -      }
 -    }
 -  });
-   const prev = (0, import_react11.useRef)("");
-   (0, import_react11.useEffect)(() => {
-     const diff3 = completion.slice(prev.current.length);
-     prev.current = completion;
-     editor == null ? void 0 : editor.commands.insertContent(diff3);
+-  const prev = (0, import_react11.useRef)("");
+-  (0, import_react11.useEffect)(() => {
+-    const diff3 = completion.slice(prev.current.length);
+-    prev.current = completion;
+-    editor == null ? void 0 : editor.commands.insertContent(diff3);
 -  }, [isLoading, editor, completion]);
-+  }, [editor, completion]);
    (0, import_react11.useEffect)(() => {
      const onKeyDown = (e) => {
 -      if (e.key === "Escape" || e.metaKey && e.key === "z") {
@@ -1299,9 +1298,12 @@ index 43b29ad33942309793dae4c5f5dbd44abf353016..91ed2a24918aff98c8eda2197c92c373
        }
      };
      const mousedownHandler = (e) => {
-@@ -16762,18 +16354,13 @@ function Editor2({
-         complete((editor == null ? void 0 : editor.getText()) || "");
-       }
+       e.preventDefault();
+       e.stopPropagation();
+       stop();
+-      if (window.confirm("AI writing paused. Continue?")) {
+-        complete((editor == null ? void 0 : editor.getText()) || "");
+-      }
      };
 -    if (isLoading) {
 -      document.addEventListener("keydown", onKeyDown);
@@ -1317,11 +1319,11 @@ index 43b29ad33942309793dae4c5f5dbd44abf353016..91ed2a24918aff98c8eda2197c92c373
        window.removeEventListener("mousedown", mousedownHandler);
      };
 -  }, [stop, isLoading, editor, complete, completion.length]);
-+  }, [stop, editor, complete, completion.length]);
++  }, [editor]);
    (0, import_react11.useEffect)(() => {
      if (!editor || hydrated)
        return;
-@@ -16784,7 +16371,7 @@ function Editor2({
+@@ -16784,7 +16362,7 @@ function Editor2({
      }
    }, [editor, defaultValue, content, hydrated, disableLocalStorage]);
    return /* @__PURE__ */ (0, import_jsx_runtime9.jsx)(
@@ -1331,7 +1333,7 @@ index 43b29ad33942309793dae4c5f5dbd44abf353016..91ed2a24918aff98c8eda2197c92c373
        value: {
          completionApi
 diff --git a/dist/index.mjs b/dist/index.mjs
-index 0630ce76514c591ddfda41588b518cebac7db95d..3334ab16ddc6810e9bf9a53b6d32ad5ffa6c3dfd 100644
+index 0630ce76514c591ddfda41588b518cebac7db95d..36b66c7beb924096d9712f2cb150c8fcdee171f7 100644
 --- a/dist/index.mjs
 +++ b/dist/index.mjs
 @@ -63,10 +63,10 @@ function styleInject(css2, { insertAt } = {}) {
@@ -2336,7 +2338,7 @@ index 0630ce76514c591ddfda41588b518cebac7db95d..3334ab16ddc6810e9bf9a53b6d32ad5f
    disableLocalStorage = false
  }) {
    const [content, setContent] = use_local_storage_default(storageKey, defaultValue);
-@@ -16700,83 +16317,30 @@ function Editor2({
+@@ -16700,83 +16317,29 @@ function Editor2({
      extensions: [...defaultExtensions, ...extensions],
      editorProps: __spreadValues(__spreadValues({}, defaultEditorProps), editorProps),
      onUpdate: (e) => {
@@ -2380,7 +2382,7 @@ index 0630ce76514c591ddfda41588b518cebac7db95d..3334ab16ddc6810e9bf9a53b6d32ad5f
 -      }
 -    }
 -  });
-   const prev = useRef4("");
+-  const prev = useRef4("");
 -  useEffect5(() => {
 -    const diff3 = completion.slice(prev.current.length);
 -    prev.current = completion;
@@ -2423,11 +2425,11 @@ index 0630ce76514c591ddfda41588b518cebac7db95d..3334ab16ddc6810e9bf9a53b6d32ad5f
        window.removeEventListener("mousedown", mousedownHandler);
      };
 -  }, [stop, isLoading, editor, complete, completion.length]);
-+  }, [stop, editor]);
++  }, [editor]);
    useEffect5(() => {
      if (!editor || hydrated)
        return;
-@@ -16787,11 +16351,9 @@ function Editor2({
+@@ -16787,11 +16350,9 @@ function Editor2({
      }
    }, [editor, defaultValue, content, hydrated, disableLocalStorage]);
    return /* @__PURE__ */ jsx9(

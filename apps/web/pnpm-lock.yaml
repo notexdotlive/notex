@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   novel@0.1.22:
-    hash: qhcxvothm7u3cks7g5kqtivloe
+    hash: k5nj33gkzd57hivu75nv66z7iy
     path: patches/novel@0.1.22.patch
 
 dependencies:
@@ -27,7 +27,7 @@ dependencies:
     version: 13.4.1(@babel/core@7.23.6)(react-dom@18.2.0)(react@18.2.0)
   novel:
     specifier: ^0.1.22
-    version: 0.1.22(patch_hash=qhcxvothm7u3cks7g5kqtivloe)(@babel/core@7.23.6)(react@18.2.0)(solid-js@1.8.12)(svelte@4.2.9)(vue@3.4.15)
+    version: 0.1.22(patch_hash=k5nj33gkzd57hivu75nv66z7iy)(@babel/core@7.23.6)(react@18.2.0)(solid-js@1.8.12)(svelte@4.2.9)(vue@3.4.15)
   pnpm:
     specifier: 8.4.0
     version: 8.4.0
@@ -4630,7 +4630,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /novel@0.1.22(patch_hash=qhcxvothm7u3cks7g5kqtivloe)(@babel/core@7.23.6)(react@18.2.0)(solid-js@1.8.12)(svelte@4.2.9)(vue@3.4.15):
+  /novel@0.1.22(patch_hash=k5nj33gkzd57hivu75nv66z7iy)(@babel/core@7.23.6)(react@18.2.0)(solid-js@1.8.12)(svelte@4.2.9)(vue@3.4.15):
     resolution: {integrity: sha512-hdZ3iV4kvCISNjRNXqQk6fRVkMZmvzWjA3zXM1bU2SXVEufBxZL+77qsdEK/XETkJkeEdQl0mk8ERwLiL0BvRg==}
     peerDependencies:
       react: ^18.2.0

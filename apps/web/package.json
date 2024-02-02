@@ -9,6 +9,7 @@
   "description": "A template for Next.js with TypeScript and Tailwind CSS",
   "scripts": {
     "id": "pnpm i && pnpm dev",
+    "ib": "pnpm i && pnpm build",
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
