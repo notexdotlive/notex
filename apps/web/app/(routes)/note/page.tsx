@@ -9,7 +9,7 @@ export default function Note() {
       >
         <Editor
           storageKey="@notex/note"
-          className="w-full max-w-4xl h-auto min-h-screen mx-auto"
+          className="w-full max-w-4xl h-auto mx-auto"
           defaultValue=""
         />
       </section>
