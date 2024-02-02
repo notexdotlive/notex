@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicons/favicon-light.png" type="image/png" />
       </head>
 
-      <body>
+      <body className={`${archivo.className}`}>
         <main className="min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
           <LayoutProvider>{children}</LayoutProvider>
         </main>
