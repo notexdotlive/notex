@@ -59,7 +59,7 @@ Boring things we've removed:
 
 \*Without an account, your notes will be stored in your browser's local storage. If you create an account, your notes will be stored in a database and synced across all your devices.
 
-> If you create an account, your notes will be stored encrypted in a database. and synced across all your devices. Your notes will be decrypted only in your device, so no one can read your notes, but you.
+> If you create an account, your notes will be stored encrypted in a database. and synced across all your devices. Your notes will be decrypted only in your device, so no one can read your notes, only you.
 
 ## Tech Stack
 
