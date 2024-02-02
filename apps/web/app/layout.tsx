@@ -5,11 +5,13 @@ import { LayoutProvider } from './layout-provider';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
-import { archivo, inter } from './fonts';
+import { fonts } from '@/config';
 
 import '../styles/globals.css';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const { archivo, inter } = fonts;
+
   return (
     <html lang="en-US" className={`${archivo.variable} ${inter.variable}`}>
       <head>
