@@ -1,13 +1,15 @@
+import { ReactNode } from 'react';
+
+import { LayoutProvider } from './layout-provider';
+
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
 import { archivo, inter } from './fonts';
 
 import '../styles/globals.css';
-import Header from './components/header';
-import Footer from './components/footer';
 
-export default function RootLayout({ children }: any) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en-US" className={`${archivo.variable} ${inter.variable}`}>
       <head>
@@ -19,9 +21,7 @@ export default function RootLayout({ children }: any) {
 
       <body>
         <main className="min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
-          <Header />
-          {children}
-          <Footer />
+          <LayoutProvider>{children}</LayoutProvider>
         </main>
         <SpeedInsights />
         <Analytics />
