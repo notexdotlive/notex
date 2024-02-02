@@ -15,7 +15,7 @@ export default function Note() {
           <img
             src="/logos/logo-notex.svg"
             alt="NoteX Logo"
-            className="w-auto h-full aspect-video object-contain"
+            className="w-auto h-full aspect-video object-contain select-none"
           />
         </a>
 
@@ -68,7 +68,7 @@ export default function Note() {
       </header>
 
       <section
-        className={`flex items-start justify-start w-full max-w-7xl h-auto mx-auto p-4 sm:py-8 md:pt-8 md:py-16 ${archivo.variable}`}
+        className={`flex items-start justify-start w-full max-w-7xl h-auto mx-auto p-4 sm:p-8 md:pt-8 md:py-16 ${archivo.variable}`}
       >
         <Editor
           storageKey="@notex/note"
