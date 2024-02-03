@@ -10,6 +10,12 @@ export const fonts = {
 };
 
 /**
+ * Environment variables
+ */
+
+export * from './env';
+
+/**
  * Others
  */
 
