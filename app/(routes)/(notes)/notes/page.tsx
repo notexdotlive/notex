@@ -57,6 +57,8 @@ export default function Notes() {
   };
 
   useEffect(() => {
+    if (!pathname || !searchParams) return;
+
     const params = new URLSearchParams(searchParams);
 
     if (search && search !== '') {
