@@ -29,6 +29,8 @@ export default function Note({ params }: { params: { id: string } }) {
       const data = await res.json();
       const { content } = data;
 
+      console.log(content);
+
       setContent(content);
       setNote(data as TNote);
     } catch (error) {

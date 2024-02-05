@@ -5,6 +5,26 @@ import { status } from '@/api/config';
 
 export const revalidate = 60; // 1 minute
 
+type ContentType = {
+  type: string;
+  attrs?: { [key: string]: string | number };
+  text?: string;
+  content?: ContentType[];
+};
+
+function extractUserText(content: ContentType | ContentType[]): string {
+  let string = '';
+
+  const contents = Array.isArray(content) ? content : [content];
+
+  for (const item of contents) {
+    if (item.text) string += item.text + ' ';
+    else if (item.content) string += extractUserText(item.content);
+  }
+
+  return string.trim();
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
@@ -21,7 +41,7 @@ export async function GET(request: Request) {
 
   try {
     if (search) {
-      const term = search.toLowerCase();
+      const term = search.toLowerCase().trim();
 
       const q = query(collection(db, 'notes'));
 
@@ -29,13 +49,16 @@ export async function GET(request: Request) {
 
       const data = snapshot.docs
         .filter((doc) => {
-          const docData = doc.data();
+          const data = doc.data();
+          const { title, tags, content: cnt } = data;
+
+          const content = JSON.parse(String(cnt)).content;
+          const note = extractUserText(content);
+
           return (
-            docData.title.toLowerCase().includes(term) ||
-            docData.tags.some((tag: string) =>
-              tag.toLowerCase().includes(term),
-            ) ||
-            docData.content.toLowerCase().includes(term)
+            title.toLowerCase().includes(term) ||
+            tags.some((tag: string) => tag.toLowerCase().includes(term)) ||
+            note.toLowerCase().includes(term)
           );
         })
         .map((doc) => ({
@@ -106,6 +129,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data, { status: 200 });
   } catch (error: Error | any) {
-    return NextResponse.json({ error }, { status: 500 });
+    return NextResponse.json(
+      { error: error.message || 'Internal server error' },
+      { status: 500 },
+    );
   }
 }

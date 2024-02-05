@@ -28,7 +28,7 @@ export default function Notes() {
       setLoading(true);
 
       const res = await fetch(`/api/notes?q=${search}`);
-      if (!res.ok) return;
+      if (!res.ok) return setNotes([]);
 
       const data = await res.json();
       setNotes(data);
