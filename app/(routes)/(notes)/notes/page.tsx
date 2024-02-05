@@ -100,18 +100,81 @@ export default function Notes() {
               <span>No notes found.</span>
             ) : (
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-auto">
-                {notes.map((note) => (
-                  <button
-                    key={note.id}
-                    onClick={() => {
-                      setNote && setNote(note);
-                      router.push(`/notes/${note.id}`);
-                    }}
-                    className="flex flex-col w-full h-fit p-4 bg-zinc-100 border border-zinc-200 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100"
-                  >
-                    <span className="text-xl text-zinc-900">{note.title}</span>
-                  </button>
-                ))}
+                {notes
+                  .sort((a, b) => {
+                    const dateA = new Date(a.metadata.updated_at);
+                    const dateB = new Date(b.metadata.updated_at);
+
+                    return dateB.getTime() - dateA.getTime();
+                  })
+                  .map((note: TNote) => {
+                    const {
+                      id,
+                      title,
+                      description,
+                      metadata: { created_at, updated_at },
+                    } = note;
+
+                    const created = new Date(created_at);
+                    const updated = new Date(updated_at);
+
+                    return (
+                      <button
+                        key={note.id}
+                        onClick={() => {
+                          setNote && setNote(note);
+                          router.push(`/notes/${id}`);
+                        }}
+                        className="flex flex-col items-start justify-start w-full h-fit bg-zinc-100 border border-zinc-200 rounded-md text-left focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100 overflow-hidden"
+                      >
+                        <div
+                          className="flex flex-col items-start justify-start w-full h-fit"
+                          aria-disabled="false"
+                        >
+                          <div
+                            className="flex flex-col flex-1 items-start justify-start gap-2 w-full h-fit p-4"
+                            aria-disabled="false"
+                          >
+                            <span className="text-xl text-zinc-900">
+                              {title}
+                            </span>
+                            <p
+                              className="w-fit text-sm text-zinc-500"
+                              style={{
+                                display: '-webkit-box',
+                                WebkitLineClamp: 3,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                              }}
+                            >
+                              {description}
+                            </p>
+                          </div>
+
+                          <footer
+                            className="flex items-center justify-between w-full h-auto p-4 border-t border-zinc-200 hover:border-zinc-300"
+                            aria-disabled="false"
+                          >
+                            <span className="flex items-center justify-start w-full h-auto text-xs text-zinc-500">
+                              <span className="flex items-center justify-start w-auto h-auto">
+                                <Icon
+                                  name="Calendar"
+                                  className="w-4 h-4 mr-1 text-zinc-500"
+                                />
+                                <span>
+                                  {created.toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  })}
+                                </span>
+                              </span>
+                            </span>
+                          </footer>
+                        </div>
+                      </button>
+                    );
+                  })}
               </ul>
             )}
           </div>
