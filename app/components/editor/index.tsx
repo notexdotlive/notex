@@ -54,8 +54,6 @@ export default function Editor({
     autofocus: true,
     onUpdate: ({ editor }) => {
       if (setContent) setContent(editor.getHTML());
-      const json = editor.getJSON();
-      console.log(json);
     },
     editorProps: {
       attributes: {
@@ -66,16 +64,13 @@ export default function Editor({
   });
 
   useEffect(() => {
-    if (!config || !content) return;
-
-    if (couldEdit) return;
-
-    config.commands.setContent({
-      type: 'doc',
-      content: JSON.parse(content).content,
-    });
-
-    setCouldEdit(true);
+    if (config && content && !couldEdit && content !== '') {
+      config.commands.setContent({
+        type: 'doc',
+        content: JSON.parse(JSON.stringify(content)).content,
+      });
+      setCouldEdit(true);
+    }
   }, [config, content, couldEdit]);
 
   return (
