@@ -22,7 +22,7 @@ function extractUserText(content: ContentType | ContentType[]): string {
     else if (item.content) string += extractUserText(item.content);
   }
 
-  return string.trim();
+  return string;
 }
 
 export async function GET(request: Request) {
@@ -64,6 +64,9 @@ export async function GET(request: Request) {
         .map((doc) => ({
           id: doc.id,
           ...doc.data(),
+          description: extractUserText(
+            JSON.parse(String(doc.data().content)).content,
+          ),
         }));
 
       return NextResponse.json(data, { status: 200 });
@@ -125,6 +128,9 @@ export async function GET(request: Request) {
     const data = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
+      description: extractUserText(
+        JSON.parse(String(doc.data().content)).content,
+      ),
     }));
 
     return NextResponse.json(data, { status: 200 });

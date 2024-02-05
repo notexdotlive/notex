@@ -5,4 +5,9 @@ export interface TNote {
   title: string;
   author_id: number;
   content: string;
+  description?: string;
+  metadata: {
+    created_at: Date;
+    updated_at: Date;
+  };
 }
