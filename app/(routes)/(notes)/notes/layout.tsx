@@ -18,11 +18,6 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
   const notesRoute = pathname === '/notes';
   const newNoteRoute = pathname === '/notes/new';
 
-  const params = useMemo(
-    () => new URLSearchParams(searchParams),
-    [searchParams],
-  );
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleSearch(search);
@@ -30,6 +25,8 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
 
   const handleSearch = (search: string) => {
     if (!search) return;
+
+    const params = new URLSearchParams(searchParams);
 
     if (search && search !== '') {
       params.set('q', search);
@@ -41,6 +38,8 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
   };
 
   const handleClearSearch = () => {
+    const params = new URLSearchParams(searchParams);
+
     setSearch('');
 
     params.delete('q');
@@ -48,9 +47,11 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+
     const term = params.get('q') || '';
     setSearch(term);
-  }, [params, searchParams]);
+  }, [searchParams]);
 
   return (
     <>

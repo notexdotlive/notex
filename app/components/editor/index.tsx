@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import {
-  Editor as TiptapEditor,
   useEditor,
   EditorContent,
   BubbleMenu,
