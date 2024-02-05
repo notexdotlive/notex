@@ -82,7 +82,7 @@ export default function Editor({
     <>
       {/* Footer */}
       {config && (
-        <div className="fixed bottom-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-zinc-200 rounded-md z-10 mt-10">
+        <div className="fixed bottom-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-zinc-200 z-10">
           <section className="flex items-center justify-start gap-2" />
 
           <section className="flex items-center justify-start gap-4">
@@ -323,7 +323,7 @@ export default function Editor({
 
       <EditorContent
         editor={config}
-        className={twMerge('w-full h-auto !outline-none', className)}
+        className={twMerge('w-full h-auto !outline-none pb-10', className)}
         onClick={() => config?.commands.focus()}
       />
     </>
