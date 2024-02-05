@@ -1,14 +1,36 @@
+import { redirects as redirectsUrls } from '@/config/redirects';
 import { NextRequest, NextResponse } from 'next/server';
 
+type TRedirects = {
+  [key: string]: string;
+};
+
+const starts = (request: NextRequest, path: string) =>
+  request.nextUrl.pathname.startsWith(path);
+
+const ends = (request: NextRequest, path: string) =>
+  request.nextUrl.pathname.endsWith(path);
+
+const equals = (request: NextRequest, path: string) =>
+  request.nextUrl.pathname === path;
+
+const redirects: TRedirects = redirectsUrls;
+
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === '/github')
-    return NextResponse.redirect('https://github.com/gelzinn/notex');
+  /**
+   * Shortcuts for the most common redirects.
+   */
+
+  for (const redirect in redirects) {
+    if (equals(request, redirect))
+      return NextResponse.redirect(redirects[redirect], 301);
+  }
 }
 
 export const config = {
   /**
-   * This represents the routes that the middleware will be applied to.
+   * Configure the middleware to only run on specific paths.
    */
 
-  matcher: ['/'],
+  matcher: null,
 };
