@@ -99,7 +99,7 @@ export default function Notes() {
             {!loading && notes && notes.length === 0 ? (
               <span>No notes found.</span>
             ) : (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full h-auto">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-auto">
                 {notes.map((note) => (
                   <button
                     key={note.id}
