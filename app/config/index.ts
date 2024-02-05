@@ -21,3 +21,4 @@ export * from './env';
 
 export * from './navigation';
 export * from './prevent-components';
+export * from './redirects';

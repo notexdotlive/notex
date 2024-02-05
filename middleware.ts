@@ -1,4 +1,4 @@
-import { redirects as redirectsUrls } from '@/config/redirects';
+import { redirects as redirectsUrls } from '@/config';
 import { NextRequest, NextResponse } from 'next/server';
 
 type TRedirects = {
