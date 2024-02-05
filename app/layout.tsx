@@ -19,6 +19,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        {/*
+        
+          Apple
+
+        */}
+
+        <meta name="apple-mobile-web-app-title" content="NoteX" />
         <meta name="application-name" content="NoteX" />
         <meta name="apple-mobile-web-app-title" content="NoteX" />
 
@@ -28,25 +35,48 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-touch-fullscreen" content="yes" />
 
+        {/*
+        
+          SEO
+        
+        */}
+
+        <meta name="application-name" content="NoteX" />
         <meta name="description" content="Never throw away a thought | NoteX" />
 
         <meta name="author" content="gelzin.com" />
+        <meta name="keywords" content="note, notes, notex, notex.live" />
+
+        <meta name="theme-color" content="#ffffff" />
+
+        {/*
+        
+          Robots and Crawlers
+
+        */}
 
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow" />
         <meta name="bingbot" content="index, follow" />
         <meta name="yandex" content="index, follow" />
 
-        <meta name="apple-mobile-web-app-title" content="NoteX" />
-        <meta name="application-name" content="NoteX" />
+        {/* 
 
-        <meta name="theme-color" content="#ffffff" />
+          Microsoft
+
+        */}
 
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta
           name="msapplication-TileImage"
           content="/favicons/favicon-light.png"
         />
+
+        {/* 
+
+          Open Graph / Facebook
+
+        */}
 
         <meta property="og:site_name" content="NoteX" />
         <meta
@@ -67,6 +97,32 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         <meta property="og:locale" content="en_US" />
 
+        {/* 
+
+          Twitter
+
+        */}
+
+        <meta name="twitter:card" content="summary_large_image" />
+
+        <meta name="twitter:site" content="@gelzinn_" />
+        <meta name="twitter:creator" content="@gelzinn_" />
+
+        <meta name="twitter:url" content="https://notex.live" />
+
+        <meta name="twitter:title" content="NoteX" />
+        <meta name="twitter:description" content="Never throw away a thought" />
+
+        <meta name="twitter:image" content="/og/og-image.png" />
+        <meta name="twitter:image:alt" content="NoteX" />
+
+        {/*
+        
+          Favicon
+
+        */}
+
+        <link rel="apple-touch-icon" href="/favicons/favicon-light.png" />
         <link rel="icon" href="/favicons/favicon-light.png" type="image/png" />
       </head>
 
