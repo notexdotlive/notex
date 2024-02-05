@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
 
       <body className={`${archivo.className}`}>
-        <main className="min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
+        <main className="flex flex-col items-start justify-start min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
           <LayoutProvider>{children}</LayoutProvider>
         </main>
         <SpeedInsights />

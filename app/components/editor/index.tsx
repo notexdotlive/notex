@@ -1,6 +1,9 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import {
+  Editor as TiptapEditor,
   useEditor,
   EditorContent,
   BubbleMenu,
@@ -11,9 +14,10 @@ import CharacterCount from '@tiptap/extension-character-count';
 
 import { twMerge } from 'tailwind-merge';
 
-import './styles.scss';
-import { Icon } from '../icon';
 import BubbleButton from './button';
+import { Icon } from '@/components/icon';
+
+import './styles.scss';
 
 interface EditorProps {
   content?: string;
@@ -28,6 +32,8 @@ export default function Editor({
   editable = true,
   className,
 }: EditorProps) {
+  const [couldEdit, setCouldEdit] = useState(false);
+
   const config = useEditor({
     extensions: [
       StarterKit.configure({
@@ -43,7 +49,7 @@ export default function Editor({
     editable,
     autofocus: true,
     onUpdate: ({ editor }) => {
-      setContent?.(editor.getHTML());
+      if (setContent) setContent(editor.getHTML());
     },
     editorProps: {
       attributes: {
@@ -52,6 +58,19 @@ export default function Editor({
       },
     },
   });
+
+  useEffect(() => {
+    if (!config || !content) return;
+
+    if (couldEdit) return;
+
+    config.commands.setContent({
+      type: 'doc',
+      content: JSON.parse(content).content,
+    });
+
+    setCouldEdit(true);
+  }, [config, content, couldEdit]);
 
   return (
     <>
@@ -291,9 +310,11 @@ export default function Editor({
           )}
         </BubbleMenu>
       )}
+
       <EditorContent
         editor={config}
-        className={twMerge('w-full h-full !outline-none', className)}
+        className={twMerge('w-full h-auto !outline-none', className)}
+        onClick={() => config?.commands.focus()}
       />
     </>
   );

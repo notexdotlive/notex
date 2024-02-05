@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <header className="sticky top-0 flex items-center justify-between min-w-screen h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-20">
+    <header className="flex items-center justify-between min-w-screen w-full h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-20">
       <div
         className="flex flex-1 items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto px-4 py-2"
         id="header-content"
@@ -10,7 +10,7 @@ export default function Header() {
             <img
               src="/logos/logo-notex.svg"
               alt="NoteX Logo"
-              className="w-auto h-8 object-contain sm:ml-1"
+              className="w-auto min-h-8 h-8 object-contain sm:ml-1"
             />
           </a>
         </div>
