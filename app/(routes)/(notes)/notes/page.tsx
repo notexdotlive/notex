@@ -77,107 +77,136 @@ export default function Notes() {
       <section className="flex flex-1 w-full h-auto mx-auto">
         {loading ? (
           <div
-            className="flex items-center justify-center w-full"
+            className="flex items-center justify-center w-full pb-16"
             aria-disabled="true"
           >
-            <span className="flex items-center justify-center w-4 h-4 text-zinc-950 pointer-events-none select-none">
-              <Icon name="Loader" className="w-4 h-4 animate-spin" />
+            <span className="flex items-center justify-center size-8 text-zinc-950 pointer-events-none select-none">
+              <Icon name="Loader" className="size-full animate-spin" />
             </span>
           </div>
         ) : (
-          <div className="flex flex-col w-full h-auto" aria-disabled="false">
-            <section className="flex flex-col items-start justify-start w-full h-auto">
-              {search && (
-                <span
-                  className={`flex items-center justify-start w-full h-auto text-sm text-zinc-500 mb-4`}
+          <>
+            <button
+              type="button"
+              onClick={() => router.push('/notes/new')}
+              className="group fixed bottom-4 right-4 sm:hidden flex items-center justify-center w-12 h-12 p-2 rounded-lg bg-zinc-100 border border-zinc-200 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100 overflow-hidden"
+            >
+              <div className="flex items-center justify-center gap-2 w-full h-full disabled:pointer-events-none">
+                <Icon name="Plus" className="size-full" strokeWidth={1} />
+              </div>
+            </button>
+
+            <div className="flex flex-col w-full h-auto" aria-disabled="false">
+              <header className="flex items-center justify-between w-full h-auto pb-4 mb-4 border-b border-zinc-200">
+                <h1 className="text-3xl font-medium text-zinc-900">
+                  Your Notes
+                </h1>
+
+                <button
+                  type="button"
+                  onClick={() => router.push('/notes/new')}
+                  className="group hidden sm:flex items-center justify-center w-auto h-auto px-3 py-2 rounded-lg bg-zinc-100 border border-zinc-200 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100 overflow-hidden"
                 >
-                  Results for: &quot;<strong>{search}</strong>&quot;
-                </span>
-              )}
-            </section>
+                  <div className="flex items-center justify-center gap-2 w-full h-full disabled:pointer-events-none">
+                    <span>New Note</span>
+                    <Icon name="Plus" className="w-4 h-4" />
+                  </div>
+                </button>
+              </header>
 
-            {!loading && notes && notes.length === 0 ? (
-              <span>No notes found.</span>
-            ) : (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-auto">
-                {notes
-                  .sort((a, b) => {
-                    const dateA = new Date(a.metadata.updated_at);
-                    const dateB = new Date(b.metadata.updated_at);
+              <section className="flex flex-col items-start justify-start w-full h-auto">
+                {search && (
+                  <span
+                    className={`flex items-center justify-start w-full h-auto text-sm text-zinc-500 mb-4`}
+                  >
+                    Results for: &quot;<strong>{search}</strong>&quot;
+                  </span>
+                )}
+              </section>
 
-                    return dateB.getTime() - dateA.getTime();
-                  })
-                  .map((note: TNote) => {
-                    const {
-                      id,
-                      title,
-                      description,
-                      metadata: { created_at, updated_at },
-                    } = note;
+              {!loading && notes && notes.length === 0 ? (
+                <span>No notes found.</span>
+              ) : (
+                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full h-auto">
+                  {notes
+                    .sort((a, b) => {
+                      const dateA = new Date(a.metadata.updated_at);
+                      const dateB = new Date(b.metadata.updated_at);
 
-                    const created = new Date(created_at);
-                    const updated = new Date(updated_at);
+                      return dateB.getTime() - dateA.getTime();
+                    })
+                    .map((note: TNote) => {
+                      const {
+                        id,
+                        title,
+                        description,
+                        metadata: { created_at, updated_at },
+                      } = note;
 
-                    return (
-                      <button
-                        key={note.id}
-                        onClick={() => {
-                          setNote && setNote(note);
-                          router.push(`/notes/${id}`);
-                        }}
-                        className="flex flex-col items-start justify-start w-full h-fit bg-zinc-100 border border-zinc-200 rounded-md text-left focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100 overflow-hidden"
-                      >
-                        <div
-                          className="flex flex-col items-start justify-start w-full h-fit"
-                          aria-disabled="false"
+                      const created = new Date(created_at);
+                      const updated = new Date(updated_at);
+
+                      return (
+                        <button
+                          key={note.id}
+                          onClick={() => {
+                            setNote && setNote(note);
+                            router.push(`/notes/${id}`);
+                          }}
+                          className="group flex flex-col items-start justify-start w-full h-fit bg-zinc-100 border border-zinc-200 rounded-md text-left focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 hover:border-zinc-300 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100 overflow-hidden"
                         >
                           <div
-                            className="flex flex-col flex-1 items-start justify-start gap-2 w-full h-fit p-4"
+                            className="flex flex-col items-start justify-start w-full h-fit"
                             aria-disabled="false"
                           >
-                            <span className="text-xl text-zinc-900">
-                              {title}
-                            </span>
-                            <p
-                              className="w-fit text-sm text-zinc-500"
-                              style={{
-                                display: '-webkit-box',
-                                WebkitLineClamp: 3,
-                                WebkitBoxOrient: 'vertical',
-                                overflow: 'hidden',
-                              }}
+                            <div
+                              className="flex flex-col flex-1 items-start justify-start gap-2 w-full h-fit p-4"
+                              aria-disabled="false"
                             >
-                              {description}
-                            </p>
-                          </div>
+                              <span className="text-xl text-zinc-900">
+                                {title}
+                              </span>
+                              <p
+                                className="w-fit text-sm text-zinc-500"
+                                style={{
+                                  display: '-webkit-box',
+                                  WebkitLineClamp: 3,
+                                  WebkitBoxOrient: 'vertical',
+                                  overflow: 'hidden',
+                                }}
+                              >
+                                {description}
+                              </p>
+                            </div>
 
-                          <footer
-                            className="flex items-center justify-between w-full h-auto p-4 border-t border-zinc-200 hover:border-zinc-300"
-                            aria-disabled="false"
-                          >
-                            <span className="flex items-center justify-start w-full h-auto text-xs text-zinc-500">
-                              <span className="flex items-center justify-start w-auto h-auto">
-                                <Icon
-                                  name="Calendar"
-                                  className="w-4 h-4 mr-1 text-zinc-500"
-                                />
-                                <span>
-                                  {created.toLocaleDateString('en-US', {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                  })}
+                            <footer
+                              className="flex items-center justify-between w-full h-auto p-4 border-t bg-zinc-200/25 border-zinc-200 group-hover:border-zinc-300"
+                              aria-disabled="false"
+                            >
+                              <span className="flex items-center justify-start w-full h-auto text-xs text-zinc-500">
+                                <span className="flex items-center justify-start w-auto h-auto">
+                                  <Icon
+                                    name="Calendar"
+                                    className="w-4 h-4 mr-1 text-zinc-500"
+                                  />
+                                  <span>
+                                    {created.toLocaleDateString('en-US', {
+                                      year: 'numeric',
+                                      month: 'long',
+                                      day: 'numeric',
+                                    })}
+                                  </span>
                                 </span>
                               </span>
-                            </span>
-                          </footer>
-                        </div>
-                      </button>
-                    );
-                  })}
-              </ul>
-            )}
-          </div>
+                            </footer>
+                          </div>
+                        </button>
+                      );
+                    })}
+                </ul>
+              )}
+            </div>
+          </>
         )}
       </section>
     </div>
