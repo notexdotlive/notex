@@ -89,7 +89,10 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
                   placeholder="Search notes"
                   className="w-full h-full bg-transparent focus:outline-none group-aria-[disabled=true]:cursor-not-allowed group-aria-[disabled=true]:select-none group-aria-[disabled=true]:pointer-events-none"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    if (e.target.value === '') handleClearSearch();
+                    setSearch(e.target.value);
+                  }}
                 />
 
                 {search !== '' && (
