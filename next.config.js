@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // Allow loading images from any domain.
+  // Allow loading images from any domain
   images: {
     remotePatterns: [
       {
@@ -9,6 +9,10 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+  },
+  // Experimental features
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
   },
 };
 
