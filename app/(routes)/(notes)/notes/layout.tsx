@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from '@/infra/next/client';
 
 import { useNote } from '@/contexts/note-context';
@@ -18,7 +18,10 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
   const notesRoute = pathname === '/notes';
   const newNoteRoute = pathname === '/notes/new';
 
-  const params = new URLSearchParams(searchParams);
+  const params = useMemo(
+    () => new URLSearchParams(searchParams),
+    [searchParams],
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +50,7 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     const term = params.get('q') || '';
     setSearch(term);
-  }, [searchParams]);
+  }, [params, searchParams]);
 
   return (
     <>
