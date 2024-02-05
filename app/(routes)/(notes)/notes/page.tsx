@@ -24,7 +24,7 @@ export default function Notes() {
           </div>
 
           <a
-            href="/notes/test"
+            href="/notes/new"
             className="group w-auto h-auto px-4 py-2 rounded-lg bg-zinc-100 border border-zinc-200 text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-500 hover:bg-zinc-200 disabled:cursor-not-allowed disabled:opacity-50 disabled:select-none disabled:bg-zinc-100 overflow-hidden"
           >
             <div className="flex items-center justify-center gap-2 w-full h-full disabled:pointer-events-none">
