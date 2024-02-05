@@ -8,8 +8,10 @@ import {
   BubbleMenu,
   FloatingMenu,
 } from '@tiptap/react';
+
 import StarterKit from '@tiptap/starter-kit';
 import CharacterCount from '@tiptap/extension-character-count';
+import Heading from '@tiptap/extension-heading';
 
 import { twMerge } from 'tailwind-merge';
 
@@ -43,12 +45,17 @@ export default function Editor({
       CharacterCount.configure({
         mode: 'textSize',
       }),
+      Heading.configure({
+        levels: [1, 2, 3],
+      }),
     ],
     content,
     editable,
     autofocus: true,
     onUpdate: ({ editor }) => {
       if (setContent) setContent(editor.getHTML());
+      const json = editor.getJSON();
+      console.log(json);
     },
     editorProps: {
       attributes: {
@@ -75,16 +82,20 @@ export default function Editor({
     <>
       {/* Footer */}
       {config && (
-        <div className="fixed bottom-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-zinc-200 rounded-md">
+        <div className="fixed bottom-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-zinc-200 rounded-md z-10 mt-10">
           <section className="flex items-center justify-start gap-2" />
 
-          <section className="flex items-center justify-start gap-2">
+          <section className="flex items-center justify-start gap-4">
             <span className="text-xs font-normal text-zinc-600">
-              {config.storage.characterCount.characters()} characters
+              {config.storage.characterCount.characters()}{' '}
+              {config.storage.characterCount.characters() === 1
+                ? 'character'
+                : 'characters'}
             </span>
 
-            <span className="text-xs font-normal text-zinc-600 ml-4">
-              {config.storage.characterCount.words()} words
+            <span className="text-xs font-normal text-zinc-600">
+              {config.storage.characterCount.words()}{' '}
+              {config.storage.characterCount.words() === 1 ? 'word' : 'words'}
             </span>
           </section>
         </div>
