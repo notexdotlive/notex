@@ -90,7 +90,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           content="Never throw away a thought | NoteX"
         />
 
-        <meta property="og:image" content="/og/og-image.png" />
+        <meta
+          property="og:image"
+          content="https://notex.live/og/og-image.png"
+        />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:alt" content="NoteX" />
@@ -113,7 +116,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="twitter:title" content="NoteX" />
         <meta name="twitter:description" content="Never throw away a thought" />
 
-        <meta name="twitter:image" content="/og/og-image.png" />
+        <meta
+          name="twitter:image"
+          content="https://notex.live/og/og-image.png"
+        />
         <meta name="twitter:image:alt" content="NoteX" />
 
         {/*
