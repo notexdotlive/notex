@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
 
   for (const redirect in redirects) {
     if (equals(request, redirect))
-      return NextResponse.redirect(redirects[redirect], 301);
+      return NextResponse.redirect(redirects[redirect]);
   }
 }
 

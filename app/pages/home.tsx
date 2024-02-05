@@ -63,7 +63,7 @@ export function Homepage() {
               id="hero-buttons"
             >
               <a
-                href="/notes"
+                href="/new"
                 className="flex flex-col items-center justify-center gap-4 h-fit px-6 py-3 my-2 text-pretty rounded-md text-zinc-50 bg-zinc-900 hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-zinc-300 focus-visible:ring-opacity-50 focus-visible:ring-offset-zinc-900"
                 id="start-creating-button"
               >

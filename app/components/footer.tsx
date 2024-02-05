@@ -14,7 +14,7 @@ export default function Footer() {
         className="relative flex flex-col items-center justify-center gap-4 w-full max-w-screen-hd mx-auto sm:p-4"
         id="footer"
       >
-        <section
+        {/* <section
           className="relative flex flex-col items-center justify-center gap-4 w-full mx-auto px-4 py-32"
           id="footer-cta-section"
         >
@@ -40,7 +40,7 @@ export default function Footer() {
               </span>
             </button>
           </div>
-        </section>
+        </section> */}
 
         <section
           className="flex flex-col items-center justify-center gap-4 w-full max-w-screen-hd mx-auto bg-zinc-100 border border-zinc-200 rounded-xl"
