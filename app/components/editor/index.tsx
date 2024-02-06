@@ -11,12 +11,13 @@ import {
 
 import StarterKit from '@tiptap/starter-kit';
 import CharacterCount from '@tiptap/extension-character-count';
-import Heading from '@tiptap/extension-heading';
 
 import { twMerge } from 'tailwind-merge';
 
 import BubbleButton from './button';
 import { Icon } from '@/components/icon';
+
+import { isJson } from '@/utils/isJson';
 
 import './styles.scss';
 
@@ -33,20 +34,15 @@ export default function Editor({
   editable = true,
   className,
 }: EditorProps) {
-  const [couldEdit, setCouldEdit] = useState(false);
-
   const config = useEditor({
     extensions: [
       StarterKit.configure({
         heading: {
-          levels: [1, 2, 3],
+          levels: [1, 2, 3, 4, 5, 6],
         },
       }),
       CharacterCount.configure({
         mode: 'textSize',
-      }),
-      Heading.configure({
-        levels: [1, 2, 3, 4, 5, 6],
       }),
     ],
     content,
@@ -64,14 +60,21 @@ export default function Editor({
   });
 
   useEffect(() => {
-    if (config && content && !couldEdit && content !== '') {
-      config.commands.setContent({
-        type: 'doc',
-        content: JSON.parse(JSON.stringify(content)).content,
-      });
-      setCouldEdit(true);
-    }
-  }, [config, content, couldEdit]);
+    if (!config) return;
+
+    const { commands } = config;
+
+    isJson(content)
+      ? commands.setContent({
+          type: 'doc',
+          content: JSON.parse(content).content,
+        })
+      : commands.setContent(content);
+  }, [config, content]);
+
+  useEffect(() => {
+    if (config) config.commands.focus();
+  }, [config]);
 
   return (
     <>
