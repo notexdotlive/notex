@@ -49,9 +49,11 @@ export default function Header() {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-zinc-50 z-10 pt-16 ${
-          open ? 'translate-y-0' : '-translate-y-full'
-        } transition-transform duration-300 ease-in-out`}
+        className={`fixed top-0 left-0 w-full bg-zinc-50 z-20 pt-16 ${
+          open
+            ? 'translate-y-0 h-full'
+            : '-translate-y-full pointer-events-none h-0 opacity-0'
+        } transition-all duration-300 ease-in-out`}
         id="overlay"
       >
         <nav className="flex flex-col flex-1 items-center justify-center gap-2 h-full p-4">
@@ -67,7 +69,7 @@ export default function Header() {
         </nav>
       </div>
 
-      <header className="flex items-center justify-between min-w-screen w-full h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-20">
+      <header className="flex items-center justify-between min-w-screen w-full h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-30">
         <div
           className="flex flex-1 items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto px-4 py-2"
           id="header-content"
