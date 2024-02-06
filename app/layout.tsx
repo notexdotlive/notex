@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
-import { LayoutProvider } from './layout-provider';
+import { LayoutProvider } from '@/layout-provider';
+import { Toaster } from '@/infra/sonner';
 
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
@@ -136,8 +137,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <main className="flex flex-col items-start justify-start min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
           <LayoutProvider>{children}</LayoutProvider>
         </main>
+
         <SpeedInsights />
         <Analytics />
+
+        <Toaster richColors duration={2000} />
       </body>
     </html>
   );
