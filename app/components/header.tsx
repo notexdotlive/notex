@@ -6,10 +6,12 @@ import { header } from '@/config';
 export default function Header() {
   const [open, setOpen] = useState(false);
 
-  const html = document.querySelector('html');
-  const body = document.querySelector('body');
-
   const handleToggleMenu = () => {
+    if (typeof window === 'undefined') return;
+
+    const html = document.querySelector('html');
+    const body = document.querySelector('body');
+
     if (!body || !html) return;
 
     if (open) {
@@ -24,7 +26,12 @@ export default function Header() {
   };
 
   useEffect(() => {
-    if (typeof window === 'undefined' || !body || !html) return;
+    if (typeof window === 'undefined') return;
+
+    const html = document.querySelector('html');
+    const body = document.querySelector('body');
+
+    if (!body || !html) return;
 
     const handleResize = () => {
       if (window.innerWidth > 640) {
@@ -37,7 +44,7 @@ export default function Header() {
     window.addEventListener('resize', handleResize);
 
     return () => window.removeEventListener('resize', handleResize);
-  }, [body, html, open]);
+  }, [open]);
 
   return (
     <>
