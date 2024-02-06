@@ -5,7 +5,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative flex flex-col items-center justify-center gap-4 w-full h-auto mx-auto p-4 md:mt-0 mt-32"
+      className="relative flex flex-col items-center justify-center gap-4 w-full h-auto mx-auto p-4 md:mt-16"
       id="footer"
     >
       <div
