@@ -17,9 +17,6 @@ dependencies:
   '@tiptap/extension-floating-menu':
     specifier: ^2.2.1
     version: 2.2.1(@tiptap/core@2.2.1)(@tiptap/pm@2.2.1)
-  '@tiptap/extension-heading':
-    specifier: ^2.2.1
-    version: 2.2.1(@tiptap/core@2.2.1)
   '@tiptap/extension-mention':
     specifier: ^2.2.1
     version: 2.2.1(@tiptap/core@2.2.1)(@tiptap/pm@2.2.1)(@tiptap/suggestion@2.2.1)
