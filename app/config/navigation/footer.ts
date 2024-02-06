@@ -1,29 +1,10 @@
-export const footer = [
-  {
-    title: 'Product',
-    children: [
-      {
-        title: 'Pricing',
-        href: '/pricing',
-      },
-      {
-        title: 'Security',
-        href: '/security',
-      },
-      {
-        title: 'Integrations',
-        href: '/integrations',
-      },
-      {
-        title: 'Customers',
-        href: '/customers',
-      },
-      {
-        title: 'Contact',
-        href: '/contact',
-      },
-    ],
-  },
+interface FooterLink {
+  title: string;
+  href?: string;
+  children?: FooterLink[];
+}
+
+export const footer: FooterLink[] = [
   {
     title: 'Company',
     children: [
@@ -34,18 +15,6 @@ export const footer = [
       {
         title: 'Blog',
         href: '/blog',
-      },
-      {
-        title: 'Jobs',
-        href: '/jobs',
-      },
-      {
-        title: 'Press',
-        href: '/press',
-      },
-      {
-        title: 'Partners',
-        href: '/partners',
       },
     ],
   },
