@@ -14,6 +14,23 @@ const nextConfig = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
+  // Rewrites
+  rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: '/:path*',
+          has: [
+            {
+              type: 'host',
+              value: 'api.notex.live',
+            },
+          ],
+          destination: '/api/:path*',
+        },
+      ],
+    };
+  },
 };
 
 module.exports = nextConfig;
