@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from '@/infra/next/client';
 
 import { useNote } from '@/contexts/note-context';
@@ -9,6 +9,8 @@ import { Icon } from '@/components/icon';
 
 export default function NotesLayout({ children }: { children: ReactNode }) {
   const { note, loadingNote } = useNote();
+
+  const [showHeader, setShowHeader] = useState(true);
   const [search, setSearch] = useState('' as string);
 
   const pathname = usePathname();
@@ -53,12 +55,27 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
     setSearch(term);
   }, [searchParams]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key === '/') {
+        event.preventDefault();
+        setShowHeader((showHeader) => !showHeader);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
   return (
     <>
       <header
-        className={`flex items-center justify-between min-w-screen w-full h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-20 ${
-          notesRoute ? '' : 'mb-12 sm:mb-0'
-        }`}
+        className={`flex items-center justify-between min-w-screen w-full h-16 mx-auto bg-zinc-100 border-b border-zinc-200 z-20 ${notesRoute ? '' : 'mb-12 sm:mb-0'} ${showHeader ? '!mb-0' : '!-mb-16 -translate-y-16'} transition-transform duration-300 ease-in-out`}
       >
         <div
           className="flex flex-1 items-center justify-between gap-4 w-full max-w-screen-hd h-full mx-auto px-4 py-2"
