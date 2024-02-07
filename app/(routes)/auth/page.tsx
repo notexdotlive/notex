@@ -9,6 +9,7 @@ import {
   redirect,
 } from '@/infra/next';
 import { Icon } from '@/components/icon';
+import { useAuth } from '@/contexts/auth-context';
 
 type FormTypes = 'login' | 'register' | 'forgot';
 
@@ -30,6 +31,8 @@ interface Form {
 }
 
 export default function AuthPage() {
+  const { user, loading, handleCreateUser, handleLoginEmail } = useAuth();
+
   const router = useRouter();
 
   const pathname = usePathname();
@@ -40,7 +43,7 @@ export default function AuthPage() {
   const [formType, setFormType] = useState<FormTypes>('login');
   const [form, setForm] = useState<Form[]>([
     {
-      forms: ['login', 'register'],
+      forms: ['register'],
       label: 'Username',
       field: 'username',
       fieldType: 'text',
@@ -64,7 +67,7 @@ export default function AuthPage() {
       },
     },
     {
-      forms: ['register', 'forgot'],
+      forms: ['login', 'register', 'forgot'],
       label: 'Email',
       field: 'email',
       fieldType: 'email',
@@ -157,7 +160,7 @@ export default function AuthPage() {
     setForm(updatedForm);
   };
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const values = [];
@@ -172,11 +175,43 @@ export default function AuthPage() {
       values.map((item) => [item.name, item.value]),
     );
 
-    console.log(data);
+    switch (formType) {
+      case 'login':
+        await handleLoginEmail(data.email, data.password).then((res) => {
+          const { user, error, code } = res;
+          if (user) router.push('/notes');
+          console.log(code);
+          switch (code) {
+            case 'auth/user-not-found':
+              alert('User not found');
+              break;
+            case 'auth/invalid-credential':
+              alert('Invalid credentials');
+              break;
+            default:
+              if (error) alert('An error occurred');
+              break;
+          }
+        });
+        break;
+      case 'register':
+        await handleCreateUser(data.email, data.password).then((res) => {
+          if (res.ok) redirect('/notes');
+        });
+        break;
+      case 'forgot':
+        break;
+      default:
+        break;
+    }
   };
 
   useEffect(() => {
-    if (!searchParams.has('action')) return;
+    if (user) redirect('/notes');
+  }, [user]);
+
+  useEffect(() => {
+    if (!searchParams.has('action') || user) return;
 
     switch (action) {
       case 'login':
@@ -196,7 +231,7 @@ export default function AuthPage() {
     params.delete('action');
 
     router.replace(`${pathname}?${params.toString()}`);
-  }, [searchParams, action, router, pathname]);
+  }, [searchParams, action, router, pathname, user]);
 
   return (
     <section className="relative flex flex-1 flex-col items-start justify-center gap-8 w-full h-auto mx-auto p-4 z-0 graph-paper">
@@ -341,18 +376,25 @@ export default function AuthPage() {
                 }
               })}
             >
-              {(() => {
-                switch (formType) {
-                  case 'login':
-                    return 'Login';
-                  case 'register':
-                    return 'Register';
-                  case 'forgot':
-                    return 'Send reset link';
-                  default:
-                    break;
-                }
-              })()}
+              {loading ? (
+                <span className="flex items-center justify-center gap-2">
+                  <Icon name="Loader" className="size-4 animate-spin" />
+                  <span>Loading...</span>
+                </span>
+              ) : (
+                (() => {
+                  switch (formType) {
+                    case 'login':
+                      return 'Login';
+                    case 'register':
+                      return 'Register';
+                    case 'forgot':
+                      return 'Send reset link';
+                    default:
+                      break;
+                  }
+                })()
+              )}
             </button>
           </section>
 

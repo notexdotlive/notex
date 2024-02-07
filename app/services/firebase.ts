@@ -1,20 +1,21 @@
 import env from '@/config/env';
-import { initializeApp } from 'firebase/app';
+
+import firebase from 'firebase/compat/app';
+
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import 'firebase/compat/database';
 
 import {
   User,
-  getAuth,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithEmailLink,
   signInWithPopup,
-  signInAnonymously,
-  EmailAuthProvider,
-  GithubAuthProvider,
-  GoogleAuthProvider,
   signOut,
+  GithubAuthProvider,
 } from 'firebase/auth';
+
 import {
-  getFirestore,
   doc,
   getDoc,
   getDocs,
@@ -22,21 +23,40 @@ import {
   query,
   where,
 } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+
+const {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGING_SENDER_ID,
+  FIREBASE_APP_ID,
+} = env;
 
 const config = {
-  apiKey: env.FIREBASE_API_KEY,
-  authDomain: env.FIREBASE_AUTH_DOMAIN,
-  projectId: env.FIREBASE_PROJECT_ID,
-  storageBucket: env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: env.FIREBASE_APP_ID,
+  apiKey: FIREBASE_API_KEY,
+  authDomain: FIREBASE_AUTH_DOMAIN,
+  projectId: FIREBASE_PROJECT_ID,
+  storageBucket: FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
+  appId: FIREBASE_APP_ID,
 };
 
-const app = initializeApp(config);
+if (!config || Object.values(config).some((key) => !key))
+  throw new Error('Firebase config is not set');
 
-const db = getFirestore(app);
-const storage = getStorage(app);
+if (!firebase.apps.length) {
+  firebase.initializeApp(config);
+} else {
+  firebase.app();
+}
+
+const app = firebase.app();
+
+const auth = firebase.auth();
+
+const db = firebase.firestore();
+const realtimeDb = firebase.database();
 
 export {
   /**
@@ -46,15 +66,16 @@ export {
   /**
    * Authentication
    */
+  auth,
+  // Create User
+  createUserWithEmailAndPassword,
+  // Sign In
   signInWithEmailAndPassword,
-  signInWithEmailLink,
   signInWithPopup,
-  signInAnonymously,
-  // Providers
-  EmailAuthProvider,
-  GithubAuthProvider,
-  GoogleAuthProvider,
+  // Sign Out
   signOut,
+  // Providers
+  GithubAuthProvider,
   /**
    * Database
    */
@@ -66,13 +87,16 @@ export {
   query,
   where,
   /**
+   * Realtime Database
+   */
+  realtimeDb,
+  /**
    * Storage
    */
-  storage,
 };
 
 /**
  * Types
  */
 
-export type { User as FirebaseUser };
+export type { User as TFUser };

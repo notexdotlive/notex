@@ -8,117 +8,71 @@ import {
   useState,
 } from 'react';
 
-import {
-  FirebaseUser,
-  signInWithPopup,
-  // EmailAuthProvider,
-  // GoogleAuthProvider,
-  GithubAuthProvider,
-} from '@/services/firebase';
+import { TFUser, auth } from '@/services/firebase';
 
 type AuthContextType = {
-  user: FirebaseUser | null;
+  user: TFUser | null;
   role: 'admin' | 'user' | 'guest';
-  // loginEmail: (email: string, password: string) => Promise<void>;
-  // loginGoogle: () => Promise<void>;
-  // loginGitHub: () => Promise<void>;
-  // logout: () => Promise<void>;
+  handleCreateUser: (email: string, password: string) => Promise<TFUser | any>;
+  handleLoginEmail: (email: string, password: string) => Promise<TFUser | any>;
   loading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const authApp = null;
+  const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-
-  const [user, setUser] = useState<FirebaseUser | null>(null);
+  const [user, setUser] = useState<TFUser | null>(null);
   const [role, setRole] = useState<'admin' | 'user' | 'guest'>('guest');
 
-  // const handleLoginEmail = async (email: string, password: string) => {
-  //   return new Promise<void>((resolve, reject) => {
-  //     signInWithPopup(authApp, new EmailAuthProvider())
-  //       .then((result) => {
-  //         const { user: u } = result;
+  const handleCreateUser = async (email: string, password: string) => {
+    if (!email || !password || loading) return;
 
-  //         setUser(u);
-  //         resolve();
-  //       })
-  //       .catch((error) => {
-  //         reject(error);
-  //       });
+    try {
+      setLoading(true);
 
-  //     setLoading(false);
-  //   });
-  // };
+      const result = await auth.createUserWithEmailAndPassword(email, password);
+      const { user: u } = result;
 
-  // const handleLoginGoogle = async () => {
-  //   return new Promise<void>((resolve, reject) => {
-  //     signInWithPopup(authApp, new GoogleAuthProvider())
-  //       .then((result) => {
-  //         const { user: u } = result;
+      setUser(u as TFUser);
 
-  //         setUser(u);
-  //         resolve();
-  //       })
-  //       .catch((error) => {
-  //         reject(error);
-  //       });
+      return {
+        user: u as TFUser,
+      };
+    } catch (error) {
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  //     setLoading(false);
-  //   });
-  // };
+  const handleLoginEmail = async (email: string, password: string) => {
+    try {
+      setLoading(true);
 
-  // const handleLoginGitHub = async () => {
-  //   return new Promise<void>((resolve, reject) => {
-  //     signInWithPopup(authApp, new GithubAuthProvider())
-  //       .then((result) => {
-  //         const { user: u } = result;
+      const result = await auth.signInWithEmailAndPassword(email, password);
+      const { user: u } = result;
 
-  //         setUser(u);
-  //         resolve();
-  //       })
-  //       .catch((error) => {
-  //         reject(error);
-  //       });
+      setUser(u as TFUser);
 
-  //     setLoading(false);
-  //   });
-  // };
-
-  // const handleLogout = async () => {
-  //   return new Promise<void>((resolve, reject) => {
-  //     auth
-  //       .signOut()
-  //       .then(() => {
-  //         setUser(null);
-  //         resolve();
-  //       })
-  //       .catch((error: any) => {
-  //         reject(error);
-  //       });
-
-  //     setLoading(false);
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   if (!auth) return;
-
-  //   const unsubscribe = auth.onAuthStateChanged((u) => {
-  //     setUser(u);
-  //     setLoading(false);
-  //   });
-
-  //   return () => unsubscribe();
-  // }, [auth]);
+      return {
+        user: u as TFUser,
+      };
+    } catch (error) {
+      return error;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AuthContext.Provider
       value={{
         user,
         role,
+        handleCreateUser,
+        handleLoginEmail,
         // loginEmail: handleLoginEmail,
         // loginGoogle: handleLoginGoogle,
         // loginGitHub: handleLoginGitHub,
