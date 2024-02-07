@@ -1,6 +1,6 @@
 name: '🆘 Help Request'
 description: 'Ask for help with a problem you are experiencing. Please provide as much information as possible to help us help you.'
-title: ''
+title: '🆘 [HELP] - '
 labels: ['help wanted']
 body:
   - type: textarea

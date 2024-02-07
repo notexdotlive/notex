@@ -1,6 +1,6 @@
 name: '🐛 Bug Report'
 description: 'Create a report for a bug you found. Please provide as much information as possible to help us fix it. (If you are not sure if it is a bug, please use the "Help Request" template)'
-title: ''
+title: '🐛 [BUG] - '
 labels: ['bug']
 body:
   - type: textarea
