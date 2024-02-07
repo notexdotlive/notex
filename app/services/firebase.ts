@@ -35,8 +35,6 @@ const config = {
 
 const app = initializeApp(config);
 
-const auth = getAuth(app);
-
 const db = getFirestore(app);
 const storage = getStorage(app);
 
@@ -48,7 +46,6 @@ export {
   /**
    * Authentication
    */
-  auth,
   signInWithEmailAndPassword,
   signInWithEmailLink,
   signInWithPopup,
