@@ -1,7 +1,18 @@
 import env from '@/config/env';
 import { initializeApp } from 'firebase/app';
 
-import { getAuth } from 'firebase/auth';
+import {
+  User,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithEmailLink,
+  signInWithPopup,
+  signInAnonymously,
+  EmailAuthProvider,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signOut,
+} from 'firebase/auth';
 import {
   getFirestore,
   doc,
@@ -25,6 +36,7 @@ const config = {
 const app = initializeApp(config);
 
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 const storage = getStorage(app);
 
@@ -37,6 +49,15 @@ export {
    * Authentication
    */
   auth,
+  signInWithEmailAndPassword,
+  signInWithEmailLink,
+  signInWithPopup,
+  signInAnonymously,
+  // Providers
+  EmailAuthProvider,
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signOut,
   /**
    * Database
    */
@@ -52,3 +73,9 @@ export {
    */
   storage,
 };
+
+/**
+ * Types
+ */
+
+export type { User as FirebaseUser };

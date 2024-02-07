@@ -9,6 +9,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { fonts } from '@/config';
 
 import '../styles/globals.css';
+import { AuthProvider } from './contexts/auth-context';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const { archivo, inter } = fonts;
@@ -133,16 +134,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicons/favicon-light.png" type="image/png" />
       </head>
 
-      <body className={`${archivo.className}`}>
-        <main className="flex flex-col items-start justify-start min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
-          <LayoutProvider>{children}</LayoutProvider>
-        </main>
+      <AuthProvider>
+        <body className={`${archivo.className}`}>
+          <main className="flex flex-col items-start justify-start min-h-screen h-auto min-w-screen bg-zinc-50 text-zinc-950 overflow-hidden">
+            <LayoutProvider>{children}</LayoutProvider>
+          </main>
 
-        <SpeedInsights />
-        <Analytics />
+          <SpeedInsights />
+          <Analytics />
 
-        <Toaster richColors duration={2000} />
-      </body>
+          <Toaster richColors duration={2000} />
+        </body>
+      </AuthProvider>
     </html>
   );
 }
