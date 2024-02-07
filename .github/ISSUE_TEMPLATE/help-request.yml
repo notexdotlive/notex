@@ -1,0 +1,47 @@
+name: '🆘 Help Request'
+description: 'Ask for help with a problem you are experiencing. Please provide as much information as possible to help us help you.'
+title: ''
+labels: ['help wanted']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 'Description'
+      description: Please enter an explicit description of your issue
+      placeholder: Short and explicit description of your incident...
+    validations:
+      required: true
+
+  - type: input
+    id: reprod-url
+    attributes:
+      label: 'Reproduction URL'
+      description: Please enter your GitHub URL to provide a reproduction of the issue
+      placeholder: ex.
+    validations:
+      required: false
+
+  - type: textarea
+    id: reprod
+    attributes:
+      label: 'Reproduction steps'
+      description: Please enter an explicit description of your issue
+      value: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      render: bash
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 'Screenshots'
+      description: If applicable, add screenshots to help explain your problem.
+      value: |
+        ![DESCRIPTION](LINK.png)
+      render: bash
+    validations:
+      required: false
