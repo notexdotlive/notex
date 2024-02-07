@@ -32,10 +32,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Contributors
 
-<center>
+<div align="center">
 
 Thanks goes to these wonderful people:
 
 ![Contributors](https://contrib.rocks/image?repo=notexdotlive/notex)
 
-</center>
+</div>

@@ -88,17 +88,17 @@ If you have any questions, feel free to open an issue based on the [ISSUE_TEMPLA
 
 ## Contributors
 
-<center>
+<div align="center">
 
 Thanks goes to these wonderful people:
 
 ![Contributors](https://contrib.rocks/image?repo=notexdotlive/notex)
 
-</center>
+</div>
 
 ## Support the project ❤
 
-<center>
+<div align="center">
 
 ### The project is developed and maintained by one person.
 
@@ -110,4 +110,4 @@ If you like the project and want to support it, think about becoming a sponsor o
 
 Give a ⭐️ if this project helped you!
 
-</center>
+</div>
