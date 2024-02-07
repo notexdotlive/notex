@@ -92,7 +92,7 @@ If you have any questions, feel free to open an issue based on the [ISSUE_TEMPLA
 
 Thanks goes to these wonderful people:
 
-[![Contributors](https://contrib.rocks/image?repo=notexdotlive/notex)]
+![Contributors](https://contrib.rocks/image?repo=notexdotlive/notex)
 
 </center>
 
