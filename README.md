@@ -12,11 +12,11 @@
 # NoteX — Never throw away a thought
 
 <p align="center">
-  <a aria-label="Latest Release" href="https://github.com/gelzinn/notex/releases/latest">
-    <img alt="" src="https://img.shields.io/github/v/release/gelzinn/notex?style=for-the-badge&labelColor=000000">
+  <a aria-label="Latest Release" href="https://github.com/notexdotlive/notex/releases/latest">
+    <img alt="" src="https://img.shields.io/github/v/release/notexdotlive/notex?style=for-the-badge&labelColor=000000">
   </a>
-  <a aria-label="License" href="https://github.com/gelzinn/notex/blob/main/LICENSE.md">
-    <img alt="" src="https://img.shields.io/github/license/gelzinn/notex?style=for-the-badge&labelColor=000000">
+  <a aria-label="License" href="https://github.com/notexdotlive/notex/blob/main/LICENSE.md">
+    <img alt="" src="https://img.shields.io/github/license/notexdotlive/notex?style=for-the-badge&labelColor=000000">
   </a>
 </p>
 
@@ -80,4 +80,34 @@ Deployed with:
 
 ## Contributing
 
-Coming soon...
+We are open to contributions. If you want to contribute, please read the [CONTRIBUTING](https://github.com/notexdotlive/notex/blob/main/CONTRIBUTING.md) file.
+
+If you have any questions, feel free to open an issue based on the [ISSUE_TEMPLATE](https://github.com/notexdotlive/notex/blob/main/.github/ISSUE_TEMPLATE.md).
+
+**You can also contribute by donating to the project.**
+
+## Contributors
+
+<center>
+
+Thanks goes to these wonderful people:
+
+[![Contributors](https://contrib.rocks/image?repo=notexdotlive/notex)]
+
+</center>
+
+## Support the project ❤
+
+<center>
+
+### The project is developed and maintained by one person.
+
+If you like the project and want to support it, think about becoming a sponsor or donating to the project.
+
+[![Buy me a coffee](https://img.shields.io/badge/Buy%20me%20a%20coffee-FFF?style=for-the-badge&logo=buy-me-a-coffee&logoColor=FFDD00&labelColor=000&color=000)](https://www.buymeacoffee.com/gelzin)
+[![Patreon](https://img.shields.io/badge/Patreon-FFF?style=for-the-badge&logo=patreon&logoColor=FF424D&labelColor=000&color=000)](https://www.patreon.com/gelzin)
+[![Github Sponsors](https://img.shields.io/badge/Github%20Sponsors-FFF?style=for-the-badge&logo=github&logoColor=FFFFFF&labelColor=000&color=000)](https://github.com/sponsors/gelzinn)
+
+Give a ⭐️ if this project helped you!
+
+</center>
