@@ -36,7 +36,7 @@ export default function NotesLayout({ children }: { children: ReactNode }) {
       params.delete('q');
     }
 
-    router.replace(`${pathname}?${params.toString()}`);
+    router.replace(pathname);
   };
 
   const handleClearSearch = () => {

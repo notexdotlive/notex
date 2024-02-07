@@ -1,6 +1,6 @@
 export const preventComponents = [
   {
-    routes: ['/notes'],
+    routes: ['/notes', '/auth'],
     components: ['Header', 'Footer'],
   },
 ];

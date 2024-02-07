@@ -98,7 +98,7 @@ export default function Header() {
 
           <div className="flex items-center justify-end gap-2">
             <a
-              href="/"
+              href="/auth/login"
               className="flex flex-1 items-center justify-center gap-4 px-4 py-2 w-auto h-10 text-sm text-pretty text-zinc-50 sm:text-zinc-950 bg-zinc-900 sm:bg-zinc-100 border border-transparent sm:border-zinc-200 rounded-md whitespace-nowrap transition duration-300 ease-in-out"
             >
               <span
@@ -110,7 +110,7 @@ export default function Header() {
             </a>
 
             <a
-              href="/"
+              href="/auth/register"
               className="hidden sm:flex flex-1 items-center justify-center gap-4 px-4 py-2 text-sm text-pretty text-zinc-50 bg-zinc-900 rounded-md"
             >
               <span
