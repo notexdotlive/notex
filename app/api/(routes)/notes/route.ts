@@ -1,7 +1,5 @@
 import { NextResponse } from '@/infra/next/server';
-import { query, db, where, getDocs, collection } from '@/services/firebase';
-
-import { status } from '@/api/config';
+import { query, db, getDocs, collection } from '@/services/firebase';
 
 export const revalidate = 60; // 1 minute
 
