@@ -6,7 +6,7 @@ interface FooterLink {
 
 export const footer: FooterLink[] = [
   {
-    title: 'Company',
+    title: 'NoteX',
     children: [
       {
         title: 'About',
@@ -16,22 +16,60 @@ export const footer: FooterLink[] = [
         title: 'Blog',
         href: '/blog',
       },
+      {
+        title: 'GitHub',
+        href: '/github',
+      },
     ],
   },
   {
-    title: 'Legal',
+    title: 'Get Started',
     children: [
       {
-        title: 'Terms of Service',
-        href: '/terms',
+        title: 'Home',
+        href: '/',
       },
       {
-        title: 'Privacy Policy',
-        href: '/privacy',
+        title: 'Account',
+        href: '/account',
       },
       {
-        title: 'Cookie Policy',
-        href: '/cookie',
+        title: 'Pricing',
+        href: '/pricing',
+      },
+    ],
+  },
+  {
+    title: 'Learn',
+    children: [
+      {
+        title: 'Help',
+        href: '/help',
+      },
+      {
+        title: 'Guides',
+        href: '/guides',
+      },
+      {
+        title: 'Examples',
+        href: '/examples',
+      },
+    ],
+  },
+  {
+    title: 'Support',
+    children: [
+      {
+        title: 'Help Center',
+        href: '/help',
+      },
+      {
+        title: 'Contact Us',
+        href: '/contact',
+      },
+      {
+        title: 'Guides',
+        href: '/guides',
       },
     ],
   },

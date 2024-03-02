@@ -17,7 +17,7 @@ body {
 }
 
 html {
-  font-family: var(--font-archivo);
+  font-family: var(--font-archivo), var(--font-inter), sans-serif;
 }
 
 @media not all and (min-width: 768px) {

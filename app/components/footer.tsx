@@ -17,25 +17,21 @@ export default function Footer() {
           id="footer"
         >
           <div
-            className="flex flex-col md:flex-row items-start justify-start gap-12 lg:gap-24 w-full mx-auto p-8"
+            className="flex flex-col items-center justify-start gap-12 w-full mx-auto p-8"
             id="footer-nav"
           >
-            <div className="flex flex-col items-center md:items-start justify-center md:justify-start gap-4 w-full md:max-w-48">
-              <a href="/" className="flex items-start justify-start gap-2">
+            <div className="flex flex-col items-center justify-center gap-4 w-full">
+              <a href="/" className="flex items-center justify-center gap-2">
                 <img
                   src="/logos/logo-notex.svg"
                   alt="NoteX Logo"
                   className="w-auto h-12 object-contain"
                 />
               </a>
-
-              <p className="text-zinc-600 text-balance text-base">
-                Never throw away a thought
-              </p>
             </div>
 
             <ul
-              className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8 w-full mx-auto"
+              className="flex flex-col sm:flex-row sm:flex-wrap items-center sm:items-start justify-center gap-8 w-full mx-auto"
               id="footer-nav"
             >
               {footer.map((item, index) => {
@@ -47,12 +43,12 @@ export default function Footer() {
                     className="flex flex-col items-center md:items-start justify-center gap-2 w-full max-w-fit md:pr-8"
                     id="footer-nav-item"
                   >
-                    <strong
-                      className="text-zinc-950 font-semibold uppercase text-sm mb-2"
+                    <span
+                      className="text-zinc-400 font-light mb-2 pointer-events-none select-none"
                       id="footer-nav-item-title"
                     >
                       {item.title}
-                    </strong>
+                    </span>
 
                     {children && (
                       <ul
@@ -79,11 +75,45 @@ export default function Footer() {
           </div>
 
           <div
-            className="flex flex-col items-center justify-center gap-2 w-full mx-auto mt-4 py-4 border-t border-zinc-200"
+            className="flex flex-col md:flex-row items-center justify-center md:justify-between gap-2 w-full mx-auto mt-4 py-4 px-8 bg-zinc-200 rounded-b-xl"
             id="footer-legal"
           >
             <p className="text-zinc-600 text-sm">
               © {year} NoteX. All rights reserved.
+            </p>
+
+            <p
+              className="flex items-center justify-center gap-4 text-zinc-600 text-sm"
+              id="footer-legal-links"
+            >
+              <a
+                href="/terms"
+                className="hover:underline"
+                id="footer-legal-terms"
+              >
+                Terms
+              </a>
+              <a
+                href="/privacy"
+                className="hover:underline"
+                id="footer-legal-privacy"
+              >
+                Privacy
+              </a>
+              <a
+                href="/cookies"
+                className="hover:underline"
+                id="footer-legal-cookies"
+              >
+                Cookies
+              </a>
+              <a
+                href="/security"
+                className="hover:underline"
+                id="footer-legal-legal"
+              >
+                Security
+              </a>
             </p>
           </div>
         </section>

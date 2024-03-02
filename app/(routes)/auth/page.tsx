@@ -31,7 +31,15 @@ interface Form {
 }
 
 export default function AuthPage() {
-  const { user, loading, handleCreateUser, handleLoginEmail } = useAuth();
+  const {
+    user,
+    loading,
+    handleCreateUser,
+    handleLoginEmail,
+    error,
+    handleResetError,
+    handleValidateResponse,
+  } = useAuth();
 
   const router = useRouter();
 
@@ -133,6 +141,8 @@ export default function AuthPage() {
   const handleChangeInputValue = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
+    handleResetError();
+
     const { name, value } = event.target;
 
     const index = form.findIndex((item) => item.field === name);
@@ -178,26 +188,17 @@ export default function AuthPage() {
     switch (formType) {
       case 'login':
         await handleLoginEmail(data.email, data.password).then((res) => {
-          const { user, error, code } = res;
-          if (user) router.push('/notes');
-          console.log(code);
-          switch (code) {
-            case 'auth/user-not-found':
-              alert('User not found');
-              break;
-            case 'auth/invalid-credential':
-              alert('Invalid credentials');
-              break;
-            default:
-              if (error) alert('An error occurred');
-              break;
-          }
+          if (res) console.log(res);
         });
         break;
       case 'register':
-        await handleCreateUser(data.email, data.password).then((res) => {
-          if (res.ok) redirect('/notes');
-        });
+        await handleCreateUser(data.email, data.password)
+          .then((res) => {
+            if (res.ok) redirect('/notes');
+          })
+          .catch((error) => {
+            handleValidateResponse(error);
+          });
         break;
       case 'forgot':
         break;
@@ -234,7 +235,7 @@ export default function AuthPage() {
   }, [searchParams, action, router, pathname, user]);
 
   return (
-    <section className="relative flex flex-1 flex-col items-start justify-center gap-8 w-full h-auto mx-auto p-4 z-0 graph-paper">
+    <section className="relative flex flex-1 flex-col items-start justify-center gap-8 w-full h-auto mx-auto p-4 z-0">
       <div className="flex flex-col items-center justify-center gap-8 my-4 w-full max-w-md mx-auto z-50">
         <a href="/" className="flex items-center justify-center gap-2 mx-auto">
           <img
@@ -243,6 +244,14 @@ export default function AuthPage() {
             className="w-auto min-h-10 h-10 object-contain pointer-events-none select-none"
           />
         </a>
+
+        {error && (
+          <div className="flex flex-1 items-center justify-center w-full max-w-md p-4 bg-rose-50 border border-rose-200 rounded-md">
+            <li className="flex items-center justify-center w-full">
+              <span className="text-center text-sm text-rose-500">{error}</span>
+            </li>
+          </div>
+        )}
 
         <form
           onSubmit={handleFormSubmit}
@@ -288,7 +297,7 @@ export default function AuthPage() {
                     className={`group/input flex flex-1 flex-col items-start justify-start space-y-1 w-full transition-all duration-300 ease-in-out`}
                   >
                     <span
-                      className={`flex items-center justify-start text-sm ${hasPendencies && focusedInput !== field ? 'text-rose-500' : 'text-zinc-500'}`}
+                      className={`flex items-center justify-start w-full text-sm ${hasPendencies && focusedInput !== field ? 'text-rose-500' : 'text-zinc-500'}`}
                     >
                       {label}
                     </span>
@@ -346,7 +355,7 @@ export default function AuthPage() {
                     {formType === 'login' && item.field === 'password' && (
                       <a
                         href="/auth/forgot"
-                        className="flex items-center justify-end w-full text-sm text-pretty font-medium text-zinc-500 hover:underline mt-2"
+                        className="flex items-center justify-end w-full text-xs text-pretty font-medium text-rose-500 hover:underline"
                       >
                         <span>Forgot your password?</span>
                       </a>
@@ -479,6 +488,8 @@ export default function AuthPage() {
           }
         })()}
       </div>
+
+      <div className="absolute top-0 -left-1.5 w-screen h-screen graph-paper bg-center bg-zinc-50 z-0" />
     </section>
   );
 }
