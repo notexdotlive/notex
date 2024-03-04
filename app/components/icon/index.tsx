@@ -1,7 +1,7 @@
 import { CSSProperties } from 'react';
 import * as LucideIcons from 'lucide-react';
 
-type IconName = keyof typeof LucideIcons;
+export type IconName = keyof typeof LucideIcons;
 
 interface IconProps {
   name: IconName;

@@ -1,25 +1,28 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Fragment, ReactNode, useEffect, useState } from 'react';
 
 import {
-  useEditor,
-  EditorContent,
   BubbleMenu,
+  EditorContent,
   FloatingMenu,
+  useEditor,
 } from '@tiptap/react';
 
-import StarterKit from '@tiptap/starter-kit';
 import CharacterCount from '@tiptap/extension-character-count';
+import StarterKit from '@tiptap/starter-kit';
+
+import { Editor as CoreEditor } from '@tiptap/react';
 
 import { twMerge } from 'tailwind-merge';
 
-import BubbleButton from './button';
-import { Icon } from '@/components/icon';
+import { Icon, IconName } from '@/components/icon';
 
 import { isJson } from '@/utils/isJson';
 
 import './styles.scss';
+
+type Editor = CoreEditor | null;
 
 interface EditorProps {
   content?: string;
@@ -34,6 +37,9 @@ export default function Editor({
   editable = true,
   className,
 }: EditorProps) {
+  const [floatingMenuOpen, setFloatingMenuOpen] = useState<boolean>(false);
+  const [floatingMenuActions, setFloatingMenuActions] = useState<any>({});
+
   const config = useEditor({
     extensions: [
       StarterKit.configure({
@@ -59,6 +65,41 @@ export default function Editor({
     },
   });
 
+  const handleFocus = () => {
+    if (!config) return;
+    config.commands.focus();
+  };
+
+  const handleAddElement = (type: string) => {
+    if (!config) return;
+
+    const actions = floatingMenuActions;
+
+    if (!actions) return;
+
+    /**
+     * Add selected element to the editor
+     *
+     * @param {string} type - The type of element to add
+     */
+
+    const action = actions[type];
+
+    if (action) action();
+
+    /**
+     * Remove the "/" that was left behind
+     * the cursor after selecting an element
+     */
+
+    const { $from } = config.state.selection;
+    const { pos } = $from;
+
+    const tr = config.state.tr.delete(pos - 1, pos);
+
+    config.view.dispatch(tr);
+  };
+
   useEffect(() => {
     if (!config) return;
 
@@ -73,257 +114,411 @@ export default function Editor({
   }, [config, content]);
 
   useEffect(() => {
-    if (config) config.commands.focus();
+    if (!config) return;
+
+    config.commands.focus();
+
+    const actions: {
+      [key: string]: () => void;
+    } = {
+      text: () => config.chain().focus().setParagraph().run(),
+      code: () => config.chain().focus().toggleCode().run(),
+      codeblock: () => config.chain().focus().toggleCodeBlock().run(),
+      blockquote: () => config.chain().focus().toggleBlockquote().run(),
+      bulletlist: () => config.chain().focus().toggleBulletList().run(),
+      orderedlist: () => config.chain().focus().toggleOrderedList().run(),
+      heading1: () => config.chain().focus().toggleHeading({ level: 1 }).run(),
+      heading2: () => config.chain().focus().toggleHeading({ level: 2 }).run(),
+      heading3: () => config.chain().focus().toggleHeading({ level: 3 }).run(),
+      heading4: () => config.chain().focus().toggleHeading({ level: 4 }).run(),
+      heading5: () => config.chain().focus().toggleHeading({ level: 5 }).run(),
+      heading6: () => config.chain().focus().toggleHeading({ level: 6 }).run(),
+    };
+
+    setFloatingMenuActions(actions);
   }, [config]);
 
   return (
     <>
-      {/* Footer */}
       {config && (
-        <div className="fixed bottom-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-zinc-200 z-10">
-          <section className="flex items-center justify-start gap-2" />
+        <>
+          {EditorBubbleMenu(config)}
 
-          <section className="flex items-center justify-start gap-4">
-            <span className="text-xs font-normal text-zinc-600">
-              {config.storage.characterCount.characters()}{' '}
-              {config.storage.characterCount.characters() === 1
-                ? 'character'
-                : 'characters'}
-            </span>
-
-            <span className="text-xs font-normal text-zinc-600">
-              {config.storage.characterCount.words()}{' '}
-              {config.storage.characterCount.words() === 1 ? 'word' : 'words'}
-            </span>
-          </section>
-        </div>
-      )}
-
-      {/* Floating menu */}
-      {config && (
-        <FloatingMenu
-          editor={config}
-          tippyOptions={{ duration: 100, placement: 'right-start' }}
-          shouldShow={({ state }) => {
-            const { $from } = state.selection;
-            const currentLine = $from.nodeBefore?.textContent;
-
-            return currentLine === '/';
-          }}
-          className="w-fit flex flex-col items-start justify-start bg-zinc-200 rounded-md overflow-hidden transition-all duration-300"
-        >
-          <span className="text-xs font-normal text-zinc-600 px-4 py-2 border-b border-zinc-300">
-            Choose a element to insert
-          </span>
-
-          <section className="w-full flex flex-col items-start justify-start p-2 bg-zinc-200 rounded-md overflow-hidden transition-all duration-300">
-            <button
-              onClick={() => config.chain().focus().setParagraph().run()}
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="CaseSensitive" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Text</span>
-            </button>
-
-            <button
-              onClick={() => config.chain().focus().toggleCode().run()}
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="Code" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Code</span>
-            </button>
-
-            <button
-              onClick={() => config.chain().focus().toggleBlockquote().run()}
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="Quote" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Quote</span>
-            </button>
-
-            <button
-              onClick={() => config.chain().focus().toggleBulletList().run()}
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="List" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">List</span>
-            </button>
-
-            <button
-              onClick={() => config.chain().focus().toggleOrderedList().run()}
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="ListOrdered" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Ordered List</span>
-            </button>
-
-            <button
-              onClick={() =>
-                config.chain().focus().toggleHeading({ level: 1 }).run()
-              }
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="Heading1" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Heading 1</span>
-            </button>
-
-            <button
-              onClick={() =>
-                config.chain().focus().toggleHeading({ level: 2 }).run()
-              }
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="Heading2" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Heading 2</span>
-            </button>
-
-            <button
-              onClick={() =>
-                config.chain().focus().toggleHeading({ level: 3 }).run()
-              }
-              className="w-full flex items-center justify-start gap-2 p-2 bg-zinc-200 hover:bg-zinc-300 rounded-md transition-all duration-300"
-            >
-              <div className="flex items-center justify-center size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
-                <Icon name="Heading3" className="size-full" />
-              </div>
-
-              <span className="text-sm font-normal">Heading 3</span>
-            </button>
-          </section>
-        </FloatingMenu>
-      )}
-
-      {/* Bubble menu */}
-      {config && (
-        <BubbleMenu
-          editor={config}
-          className="w-fit flex items-center justify-center bg-zinc-200 rounded-md divide-x divide-zinc-300 overflow-hidden transition-all duration-300"
-          tippyOptions={{
-            delay: [1000, 0],
-            animation: 'scale',
-          }}
-        >
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleBold().run()}
-            active={config.isActive('bold')}
-            title="Bold (Ctrl+B)"
-          >
-            <Icon name="Bold" />
-          </BubbleButton>
-
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleItalic().run()}
-            active={config.isActive('italic')}
-            title="Italic (Ctrl+I)"
-          >
-            <Icon name="Italic" />
-          </BubbleButton>
-
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleStrike().run()}
-            active={config.isActive('strike')}
-            title="Strikethrough (Ctrl+Shift+S)"
-          >
-            <Icon name="Strikethrough" />
-          </BubbleButton>
-
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleCode().run()}
-            active={config.isActive('code')}
-            title="Code (Ctrl+E)"
-          >
-            <Icon name="Code" />
-          </BubbleButton>
-
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleBulletList().run()}
-            active={config.isActive('bulletList')}
-            title="Bullet List (Ctrl+Shift+8)"
-          >
-            <Icon name="List" />
-          </BubbleButton>
-
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleOrderedList().run()}
-            active={config.isActive('orderedList')}
-            title="Ordered List (Ctrl+Shift+7)"
-          >
-            <Icon name="ListOrdered" />
-          </BubbleButton>
-
-          <BubbleButton
-            onClick={() => config.chain().focus().toggleBlockquote().run()}
-            active={config.isActive('blockquote')}
-            title="Blockquote (Ctrl+Shift+9)"
-          >
-            <Icon name="Quote" />
-          </BubbleButton>
-
-          <div className="flex items-center justify-center">
-            {Array.from({ length: 3 }).map((_, index) => {
-              const level = (index + 1) as 1 | 2 | 3;
-
-              return (
-                <BubbleButton
-                  key={index}
-                  title={`Heading ${level} (Ctrl+Alt+${level})`}
-                  onClick={() =>
-                    config
-                      .chain()
-                      .focus()
-                      .toggleHeading({
-                        level,
-                      })
-                      .run()
-                  }
-                  active={config.isActive('heading', { level: index + 1 })}
-                >
-                  <Icon name={`Heading${level}`} />
-                </BubbleButton>
-              );
-            })}
-          </div>
-
-          {(config.isActive('heading', { level: 1 }) ||
-            config.isActive('heading', { level: 2 }) ||
-            config.isActive('heading', { level: 3 })) && (
-            <BubbleButton
-              onClick={() => config.chain().focus().setParagraph().run()}
-              title="Paragraph (Ctrl+Alt+0)"
-              active={config.isActive('paragraph')}
-            >
-              <Icon name="CaseSensitive" />
-            </BubbleButton>
+          {EditorFloatingMenu(
+            config,
+            floatingMenuActions,
+            handleAddElement,
+            setFloatingMenuOpen,
+            floatingMenuOpen,
           )}
-        </BubbleMenu>
+
+          {EditorFooter(config)}
+        </>
       )}
 
       <EditorContent
         editor={config}
-        className={twMerge('w-full h-auto !outline-none pb-10', className)}
-        onClick={() => config?.commands.focus()}
+        className={twMerge(
+          'w-full h-auto !outline-none pb-10 flex-1 max-sm:mt-4 max-sm:pt-4',
+          className,
+        )}
+        onClick={handleFocus}
       />
     </>
   );
 }
+
+const EditorFooter = (config: Editor | null) => {
+  if (!config) return null;
+
+  return (
+    <div className="fixed bottom-0 left-0 w-full flex items-center justify-between px-4 py-2 bg-zinc-200 z-10">
+      <section className="flex items-center justify-start gap-2" />
+
+      <section className="flex items-center justify-start gap-4">
+        <span className="text-xs font-normal text-zinc-600">
+          {config.storage.characterCount.characters()}{' '}
+          {config.storage.characterCount.characters() === 1
+            ? 'character'
+            : 'characters'}
+        </span>
+
+        <span className="text-xs font-normal text-zinc-600">
+          {config.storage.characterCount.words()}{' '}
+          {config.storage.characterCount.words() === 1 ? 'word' : 'words'}
+        </span>
+      </section>
+    </div>
+  );
+};
+
+const EditorBubbleMenu = (config: Editor | null) => {
+  if (!config) return null;
+
+  const Button = ({
+    children,
+    ...props
+  }: {
+    children: ReactNode;
+    [key: string]: any;
+  }) => (
+    <button
+      {...props}
+      className="flex items-center justify-center gap-2 p-3 rounded-md hover:bg-zinc-200 data-[active=true]:bg-rose-400 data-[active=true]:text-zinc-50 transition-all duration-300"
+    >
+      {children}
+    </button>
+  );
+
+  const options = [
+    {
+      name: 'bold',
+      title: 'Bold (Ctrl+B)',
+      icon: 'Bold',
+      action: () => config.chain().focus().toggleBold().run(),
+    },
+    {
+      name: 'italic',
+      title: 'Italic (Ctrl+I)',
+      icon: 'Italic',
+      action: () => config.chain().focus().toggleItalic().run(),
+    },
+    {
+      name: 'strike',
+      title: 'Strikethrough (Ctrl+Shift+S)',
+      icon: 'Strikethrough',
+      action: () => config.chain().focus().toggleStrike().run(),
+    },
+  ];
+
+  const elements = [
+    {
+      name: 'code',
+      title: 'Code (Ctrl+E)',
+      icon: 'Code',
+      action: () => config.chain().focus().toggleCode().run(),
+    },
+    {
+      name: 'bulletList',
+      title: 'Bullet List (Ctrl+Shift+8)',
+      icon: 'List',
+      action: () => config.chain().focus().toggleBulletList().run(),
+    },
+    {
+      name: 'orderedList',
+      title: 'Ordered List (Ctrl+Shift+7)',
+      icon: 'ListOrdered',
+      action: () => config.chain().focus().toggleOrderedList().run(),
+    },
+    {
+      name: 'blockquote',
+      title: 'Blockquote (Ctrl+Shift+9)',
+      icon: 'Quote',
+      action: () => config.chain().focus().toggleBlockquote().run(),
+    },
+    {
+      name: 'heading1',
+      title: 'Heading 1 (Ctrl+Alt+1)',
+      icon: 'Heading1',
+      action: () => config.chain().focus().toggleHeading({ level: 1 }).run(),
+    },
+    {
+      name: 'heading2',
+      title: 'Heading 2 (Ctrl+Alt+2)',
+      icon: 'Heading2',
+      action: () => config.chain().focus().toggleHeading({ level: 2 }).run(),
+    },
+    {
+      name: 'heading3',
+      title: 'Heading 3 (Ctrl+Alt+3)',
+      icon: 'Heading3',
+      action: () => config.chain().focus().toggleHeading({ level: 3 }).run(),
+    },
+  ];
+
+  return (
+    <BubbleMenu
+      editor={config}
+      className="w-fit flex items-center justify-center gap-1 bg-zinc-100 border border-zinc-200 rounded-md overflow-hidden transition-all duration-300 p-1"
+      tippyOptions={{
+        delay: [1000, 0],
+        animation: 'scale',
+      }}
+    >
+      {options.map((option, index) => {
+        const { name, title, icon, action } = option;
+        const isActive = config.isActive(name);
+
+        return (
+          <Button
+            key={index}
+            onClick={action}
+            data-active={isActive}
+            title={title}
+          >
+            <Icon name={icon as any} />
+          </Button>
+        );
+      })}
+
+      {elements.map((element, index) => {
+        const { name, title, icon, action } = element;
+        const isActive = config.isActive(name);
+
+        return (
+          <Button
+            key={index}
+            onClick={action}
+            data-active={isActive}
+            title={title}
+          >
+            <Icon name={icon as any} />
+          </Button>
+        );
+      })}
+    </BubbleMenu>
+  );
+};
+
+const EditorFloatingMenu = (
+  config: Editor | null,
+  actions = null,
+  handleAddElement: (type: string) => void,
+  toggleFloatingMenu: (open: boolean) => void,
+  floatingMenu: boolean,
+) => {
+  interface Element {
+    type: string;
+    icon: IconName;
+    title: string;
+  }
+
+  interface Elements {
+    title: string;
+    itens: Element[];
+  }
+
+  if (!config || !actions) return null;
+
+  const elements: Elements[] = [
+    {
+      title: 'Basic Blocks',
+      itens: [
+        {
+          type: 'text',
+          icon: 'CaseSensitive',
+          title: 'Text',
+        },
+        {
+          type: 'blockquote',
+          icon: 'Quote',
+          title: 'Quote',
+        },
+        {
+          type: 'code',
+          icon: 'Code',
+          title: 'Single Line Code',
+        },
+        {
+          type: 'codeblock',
+          icon: 'CodeSquare',
+          title: 'Code Block',
+        },
+        {
+          type: 'bulletlist',
+          icon: 'List',
+          title: 'List',
+        },
+        {
+          type: 'orderedlist',
+          icon: 'ListOrdered',
+          title: 'Ordered List',
+        },
+        {
+          type: 'heading1',
+          icon: 'Heading1',
+          title: 'Heading 1',
+        },
+        {
+          type: 'heading2',
+          icon: 'Heading2',
+          title: 'Heading 2',
+        },
+        {
+          type: 'heading3',
+          icon: 'Heading3',
+          title: 'Heading 3',
+        },
+        {
+          type: 'heading4',
+          icon: 'Heading4',
+          title: 'Heading 4',
+        },
+        {
+          type: 'heading5',
+          icon: 'Heading5',
+          title: 'Heading 5',
+        },
+        {
+          type: 'heading6',
+          icon: 'Heading6',
+          title: 'Heading 6',
+        },
+      ],
+    },
+    {
+      title: 'Advanced Blocks',
+      itens: [
+        {
+          type: 'table',
+          icon: 'Table',
+          title: 'Table',
+        },
+        {
+          type: 'image',
+          icon: 'Image',
+          title: 'Image',
+        },
+        {
+          type: 'video',
+          icon: 'Video',
+          title: 'Video',
+        },
+        {
+          type: 'link',
+          icon: 'Link',
+          title: 'Link',
+        },
+      ],
+    },
+    {
+      title: 'AI Blocks',
+      itens: [
+        {
+          type: 'chat',
+          icon: 'MessageCircle',
+          title: 'Chat',
+        },
+        {
+          type: 'calendar',
+          icon: 'Calendar',
+          title: 'Calendar',
+        },
+        {
+          type: 'todo',
+          icon: 'ListTodo',
+          title: 'Todo List',
+        },
+        {
+          type: 'kanban',
+          icon: 'Kanban',
+          title: 'Kanban',
+        },
+      ],
+    },
+  ];
+
+  return (
+    <FloatingMenu
+      editor={config}
+      tippyOptions={{ duration: 100, placement: 'right-start' }}
+      shouldShow={({ state }) => {
+        const { $from } = state.selection;
+        const currentLine =
+          ($from.nodeBefore && $from.nodeBefore.textContent) || '';
+
+        if (currentLine === '/') {
+          toggleFloatingMenu(true);
+          return true;
+        } else {
+          toggleFloatingMenu(false);
+          return false;
+        }
+      }}
+      className={twMerge(
+        'flex flex-col items-start justify-start sm:min-w-64 w-full max-w-md h-auto max-h-[40vh] bg-zinc-100 border border-zinc-200 rounded-md overflow-auto',
+        floatingMenu
+          ? 'opacity-100 transition-all duration-300'
+          : 'opacity-0 pointer-events-none',
+      )}
+    >
+      {elements.map((element, index) => {
+        const { title, itens } = element;
+
+        return (
+          <Fragment key={index}>
+            <span className="w-full flex items-center justify-start p-4 pb-1 border-t border-zinc-200 first-of-type:border-t-0 text-sm font-bold text-zinc-600">
+              {title}
+            </span>
+
+            <ol className="w-full flex flex-col items-start justify-start p-2">
+              {itens.map((item, i) => {
+                const { type, icon, title } = item;
+
+                const isActive = config.isActive(type);
+                const isDisabled = !actions || !actions[type];
+
+                return (
+                  <button
+                    key={i}
+                    onClick={() => handleAddElement(type)}
+                    disabled={isDisabled}
+                    className="w-full flex items-center justify-start gap-2 p-2 data-[disabled=false]:hover:bg-zinc-200 rounded-md transition-all duration-300 focus:outline-none focus:ring-1 focus:ring-zinc-500 data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed"
+                    data-active={isActive}
+                    data-disabled={isDisabled}
+                  >
+                    <div className="flex items-center justify-center min-w-6 min-h-6 size-6 p-1 bg-zinc-100 border border-zinc-300 rounded-md">
+                      <Icon name={icon as any} className="size-full" />
+                    </div>
+
+                    <span className="text-sm font-normal">{title}</span>
+                  </button>
+                );
+              })}
+            </ol>
+          </Fragment>
+        );
+      })}
+    </FloatingMenu>
+  );
+};

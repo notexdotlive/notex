@@ -41,7 +41,6 @@ export default function Note({ params }: { params: { id: string } }) {
   useEffect(() => {
     const id = params.id;
     handleLoad(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params, params.id]);
 
   return (
