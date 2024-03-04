@@ -40,70 +40,73 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col flex-1 items-start justify-start gap-2 w-full max-w-lg h-screen max-h-screen mx-auto p-4 md:py-8 overflow-hidden">
-      <header className="flex flex-col items-center justify-center w-full h-auto mb-4">
-        <h1 className="text-4xl font-bold text-zinc-900 -mb-1">Notify</h1>
-        <p className="mt-2 text-zinc-600">NoteX&apos;s AI Chatbot</p>
-      </header>
-
       <form
         ref={formRef}
         onSubmit={handleSubmit}
         className="flex flex-1 flex-col items-center justify-start w-full min-h-full h-full gap-4 overflow-hidden"
       >
+        <header className="flex flex-col items-center justify-center w-full h-auto gap-1">
+          <h1 className="text-4xl font-bold text-zinc-900 -mb-1">Notify</h1>
+
+          <p className="text-sm text-zinc-600">NoteX&apos;s AI assistant</p>
+        </header>
+
         <section
           className={`flex flex-1 flex-col items-center ${
             messages && messages.length > 0 ? 'justify-start' : 'justify-center'
-          } w-full min-h-full h-full gap-6 sm:bg-zinc-100 max-sm:border-transparent sm:border border-zinc-200 rounded-lg sm:p-2 transition-all duration-300 ease-in-out overflow-y-auto`}
+          } w-full min-h-full h-full gap-6 sm:bg-zinc-100 max-sm:border-transparent sm:border border-zinc-200 rounded-lg sm:p-4 transition-all duration-300 ease-in-out overflow-y-auto`}
         >
           {messages && messages.length > 0 ? (
-            messages.map((m) => (
-              <div
-                key={m.id}
-                className="flex items-start justify-start w-full h-auto"
-              >
-                {(() => {
-                  switch (m.role) {
-                    case 'user':
-                      return (
-                        <img
-                          src="https://github.com/gelzinn.png"
-                          alt="User"
-                          width="32"
-                          height="32"
-                          className="size-8 mr-3 rounded-full pointer-events-none select-none"
-                        />
-                      );
-                    case 'assistant':
-                      return (
-                        <img
-                          src="https://static.thenounproject.com/png/1913797-200.png"
-                          alt="Bot"
-                          width="32"
-                          height="32"
-                          className="size-8 mr-3 pointer-events-none select-none"
-                        />
-                      );
-                  }
-                })()}
+            messages.map((m) => {
+              const { id, content, role } = m;
+              const sender = role === 'user' ? 'You' : 'Notify';
 
-                <div className="flex flex-col items-start justify-start w-full">
-                  <span
-                    className="
-                      text-xs font-bold text-zinc-600 -mb-1"
-                  >
-                    {m.role === 'user' ? 'You' : 'Notify'}
-                  </span>
+              const Avatar = () => (
+                <picture>
+                  {role === 'user' ? (
+                    <img
+                      src="https://github.com/gelzinn.png"
+                      alt="User"
+                      width="32"
+                      height="32"
+                      className="size-8 mr-3 rounded-full pointer-events-none select-none"
+                    />
+                  ) : 'assistant' ? (
+                    <img
+                      src="https://static.thenounproject.com/png/1913797-200.png"
+                      alt="Bot"
+                      width="32"
+                      height="32"
+                      className="size-8 mr-3 pointer-events-none select-none"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 mr-3 rounded-full bg-zinc-300 pointer-events-none select-none" />
+                  )}
+                </picture>
+              );
 
-                  <p className="flex flex-col items-start justify-start w-full h-auto mt-1">
-                    {m.content.split('\n').map((c, i) => (
-                      <span key={i} className="first-of-type:mt-0 mt-2">
-                        {c}
-                      </span>
-                    ))}
-                  </p>
+              return (
+                <div
+                  key={id}
+                  className="flex items-start justify-start w-full h-auto"
+                >
+                  <Avatar />
+                  <div className="flex flex-col items-start justify-start w-full">
+                    <span className="text-xs font-bold text-zinc-600 -mt-1 mb-1">
+                      {sender}
+                    </span>
+
+                    <p className="flex flex-col items-start justify-start w-full h-auto mt-1">
+                      {content.split('\n').map((message, i) => (
+                        <span key={i} className="first-of-type:-mt-2 mt-2">
+                          {message}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))
+              );
+            })
           ) : (
             <div className="flex flex-col items-center justify-center w-full min-h-32 h-auto text-center px-4 py-8">
               <img
@@ -119,7 +122,7 @@ export default function Chat() {
           )}
         </section>
 
-        <section className="flex items-center justify-center gap-2 w-full min-h-10 h-auto mt-auto transition-all duration-300 ease-in-out bg-zinc-100 border border-zinc-200 rounded-lg pl-4 pr-2 py-1.5">
+        <section className="flex items-center justify-center gap-2 w-full min-h-10 h-auto mt-auto transition-all duration-300 ease-in-out bg-zinc-100 border border-zinc-200 rounded-lg pl-3 pr-1.5 py-1">
           <label
             htmlFor="say"
             className="group flex items-center w-full h-auto min-h-10 overflow-hidden"
