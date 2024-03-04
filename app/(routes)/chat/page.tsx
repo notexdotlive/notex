@@ -8,11 +8,35 @@ import useAutosizeTextArea from '@/hooks/useAutosizeTextArea';
 
 export default function Chat() {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit: handleSendMessage,
+  } = useChat();
 
   const textArea = textAreaRef ? textAreaRef.current : null;
 
   useAutosizeTextArea(textArea, input);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSendMessage(e);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+
+      if (!formRef || (formRef && !formRef.current) || !formRef.current) return;
+
+      formRef.current.dispatchEvent(
+        new Event('submit', { bubbles: true, cancelable: true }),
+      );
+    }
+  };
 
   return (
     <div className="flex flex-col flex-1 items-start justify-start gap-2 w-full max-w-lg h-screen max-h-screen mx-auto p-4 md:py-8 overflow-hidden">
@@ -22,6 +46,7 @@ export default function Chat() {
       </header>
 
       <form
+        ref={formRef}
         onSubmit={handleSubmit}
         className="flex flex-1 flex-col items-center justify-start w-full min-h-full h-full gap-4 overflow-hidden"
       >
@@ -57,7 +82,7 @@ export default function Chat() {
                   }
                 })()}
 
-                <div className="flex flex-col items-start justify-start w-auto">
+                <div className="flex flex-col items-start justify-start w-full">
                   <span
                     className="
                       text-xs font-bold text-zinc-600 -mb-1"
@@ -65,7 +90,7 @@ export default function Chat() {
                     {m.role === 'user' ? 'You' : 'Notify'}
                   </span>
 
-                  <p className="mt-1">
+                  <p className="flex flex-col items-start justify-start w-full h-auto mt-1">
                     {m.content.split('\n').map((c, i) => (
                       <span key={i} className="mt-2">
                         {c}
@@ -102,6 +127,7 @@ export default function Chat() {
               rows={1}
               value={input}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
               className="w-full min-h-6 h-auto max-h-32 bg-transparent focus:outline-none group-aria-[disabled=true]:cursor-not-allowed group-aria-[disabled=true]:select-none group-aria-[disabled=true]:pointer-events-none group-aria-[disabled=true]:opacity-50 resize-none"
             />
           </label>
