@@ -108,7 +108,7 @@ export default function Chat() {
 
           <button
             type="submit"
-            disabled={!input || input.trim() === '' ? true : false}
+            disabled={!input}
             className="flex items-center justify-center w-10 h-10 text-zinc-500 focus:outline-none rounded-lg hover:bg-zinc-200/65 cursor-pointer transition-all duration-300 ease-in-out"
           >
             <Icon name="Send" className="w-4 h-4" />
