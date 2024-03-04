@@ -92,7 +92,7 @@ export default function Chat() {
 
                   <p className="flex flex-col items-start justify-start w-full h-auto mt-1">
                     {m.content.split('\n').map((c, i) => (
-                      <span key={i} className="mt-2">
+                      <span key={i} className="first-of-type:mt-0 mt-2">
                         {c}
                       </span>
                     ))}
