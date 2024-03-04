@@ -18,7 +18,7 @@ export default function Chat() {
     <div className="flex flex-col flex-1 items-start justify-start gap-2 w-full max-w-lg h-screen max-h-screen mx-auto p-4 md:py-8 overflow-hidden">
       <header className="flex flex-col items-center justify-center w-full h-auto mb-4">
         <h1 className="text-4xl font-bold text-zinc-900 -mb-1">Notify</h1>
-        <p className="mt-2 text-zinc-600">NoteX's AI Chatbot</p>
+        <p className="mt-2 text-zinc-600">NoteX&apos;s AI Chatbot</p>
       </header>
 
       <form
