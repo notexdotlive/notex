@@ -1,7 +1,15 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // Allow loading images from any domain
+  /**
+   * Turn off the default behavior of Next.js to optimize font loading
+   * @see https://nextjs.org/docs/app/building-your-application/optimizing/fonts
+   */
+  optimizeFonts: false,
+  /**
+   * Allow loading images from any domain
+   * @see https://nextjs.org/docs/app/building-your-application/optimizing/images
+   */
   images: {
     remotePatterns: [
       {
@@ -10,11 +18,16 @@ const nextConfig = {
       },
     ],
   },
-  // Experimental features
+  /**
+   * Experimental features
+   */
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
-  // Rewrites
+  /**
+   * Rewrites
+   * @see https://nextjs.org/docs/app/api-reference/next-config-js/rewrites
+   */
   rewrites() {
     return {
       beforeFiles: [

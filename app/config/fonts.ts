@@ -1,16 +1,13 @@
-import { Archivo, Inter } from 'next/font/google';
+import localFont from 'next/font/local';
 
-const archivo = Archivo({
-  subsets: ['latin'],
-  variable: '--font-archivo',
-  display: 'swap',
-  weight: ['400', '500', '600', '700', '800', '900'],
+const inter = localFont({
+  src: '../../public/fonts/Inter.woff2',
+  variable: '--font-inter',
 });
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
+const archivo = localFont({
+  src: '../../public/fonts/Archivo.woff2',
+  variable: '--font-archivo',
 });
 
 export { archivo, inter };
