@@ -6,6 +6,7 @@ const env = {
   FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID || '',
   FIREBASE_APP_ID: process.env.FIREBASE_APP_ID || '',
   PERPLEXITY_API_KEY: process.env.PERPLEXITY_API_KEY || '',
+  PERPLEXITY_AI_MODEL: process.env.PERPLEXITY_AI_MODEL || 'pplx-7b-chat',
 };
 
 export default env;

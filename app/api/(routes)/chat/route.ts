@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const response = await perplexity.chat.completions.create({
-    model: 'pplx-7b-chat',
+    model: env.PERPLEXITY_AI_MODEL,
     stream: true,
     messages: [
       {
