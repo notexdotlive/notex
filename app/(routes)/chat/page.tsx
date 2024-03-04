@@ -68,7 +68,9 @@ export default function Chat() {
                         <img
                           src="https://github.com/gelzinn.png"
                           alt="User"
-                          className="size-8 mr-3 rounded-full"
+                          width="32"
+                          height="32"
+                          className="size-8 mr-3 rounded-full pointer-events-none select-none"
                         />
                       );
                     case 'assistant':
@@ -76,7 +78,9 @@ export default function Chat() {
                         <img
                           src="https://static.thenounproject.com/png/1913797-200.png"
                           alt="Bot"
-                          className="size-8 p-1 mr-3"
+                          width="32"
+                          height="32"
+                          className="size-8 mr-3 pointer-events-none select-none"
                         />
                       );
                   }
